@@ -53,7 +53,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/auth/usuarios/**").hasRole("ADMIN")
                 // Perfil próprio (qualquer usuário autenticado; sempre sobre a própria conta)
                 .requestMatchers(HttpMethod.GET, "/api/auth/me").authenticated()
-                .requestMatchers(HttpMethod.PUT, "/api/auth/me", "/api/auth/me/senha").authenticated()
+                .requestMatchers(HttpMethod.PUT, "/api/auth/me", "/api/auth/me/senha",
+                        "/api/auth/me/cpf").authenticated()
 
                 // Visão administrativa de produtores, fazendas e talhões
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")

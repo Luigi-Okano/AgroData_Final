@@ -162,6 +162,7 @@
         .manage-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 17px; margin-bottom: 17px; }
         .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 17px; }
         .form-field { display: grid; gap: 6px; min-width: 0; }
+        .form-field[hidden] { display: none; }
         .form-field.full { grid-column: 1 / -1; }
         .form-field label { color: #68776d; font-size: 11px; font-weight: 650; }
         .form-field input, .form-field select { width: 100%; min-height: 39px; padding: 0 10px; border: 1px solid #dfe6df; border-radius: 9px; outline-color: #90b69a; background: #fff; color: var(--ink); font-size: 12px; }

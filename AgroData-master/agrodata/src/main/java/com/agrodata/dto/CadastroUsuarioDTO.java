@@ -26,7 +26,8 @@ public class CadastroUsuarioDTO extends PerfilUpdateDTO {
     public String getNomeCompleto() { return super.getNomeCompleto(); }
 
     @NotBlank(message = "CPF obrigatório")
-    @Pattern(regexp = "^[0-9.\\-]{0,14}$", message = "CPF inválido")
+    @Pattern(regexp = "^(?:[0-9]{11}|[0-9]{3}\\.[0-9]{3}\\.[0-9]{3}-[0-9]{2})$",
+            message = "Informe 11 dígitos para o CPF.")
     public String getCpf() { return cpf; }
     public void setCpf(String cpf) { this.cpf = cpf; }
 

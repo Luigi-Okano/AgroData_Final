@@ -68,7 +68,8 @@ public class AdminProdutorService {
                     String situacao = situacaoPorTalhao.getOrDefault(t.getIdTalhao(), "SEM_DADOS");
                     if ("REGAR".equals(situacao)) paraRegar++;
                     talhoesDto.add(new AdminProdutorDTO.Talhao(t.getIdTalhao(), t.getNome(),
-                            t.getIdCultura() != null ? nomeCultura.get(t.getIdCultura()) : null,
+                            t.getUmidadeMinimaPersonalizada() != null ? "Outro"
+                                    : t.getIdCultura() != null ? nomeCultura.get(t.getIdCultura()) : null,
                             t.getTipoSolo(), situacao));
                 }
                 totalTalhoes += talhoesDto.size();

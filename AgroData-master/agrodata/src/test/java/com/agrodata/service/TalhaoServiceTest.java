@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -75,6 +76,59 @@ class TalhaoServiceTest {
         TalhaoUpdateDTO dto = new TalhaoUpdateDTO();
         dto.setNome("Talhão");
         dto.setArea(new BigDecimal("6.00"));
+
+        ResponseStatusException error = assertThrows(ResponseStatusException.class,
+                () -> service(talhoes, fazendas, mock(CulturaRepository.class),
+                        mock(ProdutorAccessService.class)).atualizar(23L, dto, "produtor", false));
+
+        assertEquals(HttpStatus.BAD_REQUEST, error.getStatusCode());
+        verify(talhoes, never()).save(any(Talhao.class));
+    }
+
+    @Test
+    void updatesPlotWithCustomHumidityRangeWithoutCreatingGlobalCulture() {
+        TalhaoRepository talhoes = mock(TalhaoRepository.class);
+        FazendaRepository fazendas = mock(FazendaRepository.class);
+        CulturaRepository culturas = mock(CulturaRepository.class);
+        Talhao talhao = new Talhao(12L, "Talhão", new BigDecimal("3.00"), "Arenoso");
+        talhao.setIdTalhao(23L);
+        talhao.setIdCultura(4L);
+        Fazenda fazenda = new Fazenda(4L, 5L, "Fazenda", new BigDecimal("10.00"));
+        fazenda.setIdFazenda(12L);
+        when(talhoes.findById(23L)).thenReturn(Optional.of(talhao));
+        when(fazendas.findById(12L)).thenReturn(Optional.of(fazenda));
+        when(talhoes.somarAreaPorFazenda(12L)).thenReturn(new BigDecimal("8.00"));
+        TalhaoUpdateDTO dto = new TalhaoUpdateDTO();
+        dto.setNome("Talhão");
+        dto.setArea(new BigDecimal("3.00"));
+        dto.setUmidadeMinimaPersonalizada(32.5);
+        dto.setUmidadeMaximaPersonalizada(71.0);
+
+        service(talhoes, fazendas, culturas, mock(ProdutorAccessService.class))
+                .atualizar(23L, dto, "produtor", false);
+
+        assertNull(talhao.getIdCultura());
+        assertEquals(32.5, talhao.getUmidadeMinimaPersonalizada());
+        assertEquals(71.0, talhao.getUmidadeMaximaPersonalizada());
+        verify(culturas, never()).findById(any());
+        verify(talhoes).save(talhao);
+    }
+
+    @Test
+    void rejectsIncompleteCustomHumidityRange() {
+        TalhaoRepository talhoes = mock(TalhaoRepository.class);
+        FazendaRepository fazendas = mock(FazendaRepository.class);
+        Talhao talhao = new Talhao(12L, "Talhão", new BigDecimal("3.00"), "Arenoso");
+        talhao.setIdTalhao(23L);
+        Fazenda fazenda = new Fazenda(4L, 5L, "Fazenda", new BigDecimal("10.00"));
+        fazenda.setIdFazenda(12L);
+        when(talhoes.findById(23L)).thenReturn(Optional.of(talhao));
+        when(fazendas.findById(12L)).thenReturn(Optional.of(fazenda));
+        when(talhoes.somarAreaPorFazenda(12L)).thenReturn(new BigDecimal("8.00"));
+        TalhaoUpdateDTO dto = new TalhaoUpdateDTO();
+        dto.setNome("Talhão");
+        dto.setArea(new BigDecimal("3.00"));
+        dto.setUmidadeMinimaPersonalizada(32.5);
 
         ResponseStatusException error = assertThrows(ResponseStatusException.class,
                 () -> service(talhoes, fazendas, mock(CulturaRepository.class),

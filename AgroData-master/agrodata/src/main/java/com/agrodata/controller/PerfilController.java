@@ -1,5 +1,6 @@
 package com.agrodata.controller;
 
+import com.agrodata.dto.CpfRequestDTO;
 import com.agrodata.dto.PerfilResponseDTO;
 import com.agrodata.dto.PerfilUpdateDTO;
 import com.agrodata.dto.SenhaRequestDTO;
@@ -28,6 +29,11 @@ public class PerfilController {
     @PutMapping
     public PerfilResponseDTO atualizar(Authentication auth, @Valid @RequestBody PerfilUpdateDTO dto) {
         return PerfilResponseDTO.de(service.atualizarMeusDados(auth.getName(), dto));
+    }
+
+    @PutMapping("/cpf")
+    public PerfilResponseDTO cadastrarCpf(Authentication auth, @Valid @RequestBody CpfRequestDTO dto) {
+        return PerfilResponseDTO.de(service.cadastrarCpf(auth.getName(), dto.getCpf()));
     }
 
     @PutMapping("/senha")

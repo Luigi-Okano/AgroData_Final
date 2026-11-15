@@ -72,6 +72,7 @@ public class AuthController {
         }
 
         Usuario novo = new Usuario(username, encoder.encode(dto.getPassword()), Role.PRODUTOR);
+        usuarioService.definirCpf(novo, dto.getCpf());
         usuarioService.aplicarDados(novo, dto);
         novo = usuarios.save(novo);
         return ResponseEntity.status(201)

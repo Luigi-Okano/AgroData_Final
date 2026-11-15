@@ -27,6 +27,12 @@ public class Talhao {
     @Column(name = "id_cultura")
     private Long idCultura;
 
+    @Column(name = "umidade_minima_personalizada")
+    private Double umidadeMinimaPersonalizada;
+
+    @Column(name = "umidade_maxima_personalizada")
+    private Double umidadeMaximaPersonalizada;
+
     public Talhao() {}
 
     public Talhao(Long idFazenda, String nome, BigDecimal area, String tipoSolo) {
@@ -50,6 +56,16 @@ public class Talhao {
 
     public Long getIdCultura() { return idCultura; }
     public void setIdCultura(Long idCultura) { this.idCultura = idCultura; }
+
+    public Double getUmidadeMinimaPersonalizada() { return umidadeMinimaPersonalizada; }
+    public void setUmidadeMinimaPersonalizada(Double umidadeMinimaPersonalizada) {
+        this.umidadeMinimaPersonalizada = umidadeMinimaPersonalizada;
+    }
+
+    public Double getUmidadeMaximaPersonalizada() { return umidadeMaximaPersonalizada; }
+    public void setUmidadeMaximaPersonalizada(Double umidadeMaximaPersonalizada) {
+        this.umidadeMaximaPersonalizada = umidadeMaximaPersonalizada;
+    }
 
     public String getTipoSolo() { return tipoSolo; }
     public void setTipoSolo(String tipoSolo) { this.tipoSolo = tipoSolo; }

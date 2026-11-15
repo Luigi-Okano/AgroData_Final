@@ -25,6 +25,14 @@ public class Cultura {
 
     public Cultura() {}
 
+    public static Cultura outra(Double umidadeMinima, Double umidadeMaxima) {
+        Cultura cultura = new Cultura();
+        cultura.setNome("Outro");
+        cultura.setUmidadeMinima(umidadeMinima);
+        cultura.setUmidadeMaxima(umidadeMaxima);
+        return cultura;
+    }
+
     public Long getIdCultura() { return idCultura; }
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }

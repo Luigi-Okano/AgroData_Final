@@ -328,10 +328,6 @@
                             <input id="fazenda-cep" name="cep" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="9" pattern="[0-9]{5}-?[0-9]{3}" required placeholder="00000-000">
                         </div>
                         <div class="form-field">
-                            <label for="fazenda-cidade">Cidade</label>
-                            <input id="fazenda-cidade" name="cidade" type="text" maxlength="100" required>
-                        </div>
-                        <div class="form-field">
                             <label for="fazenda-estado">Estado (UF)</label>
                             <select id="fazenda-estado" name="estado" required>
                                 <option value="">Selecione a UF</option>
@@ -353,14 +349,13 @@
                             </select>
                         </div>
                         <div class="form-field">
-                            <label for="fazenda-latitude">Latitude</label>
-                            <input id="fazenda-latitude" name="latitude" type="number" min="-90" max="90" step="any" placeholder="-23.5505">
+                            <label for="fazenda-cidade">Cidade</label>
+                            <select id="fazenda-cidade" name="cidade" required disabled>
+                                <option value="">Selecione o estado primeiro</option>
+                            </select>
                         </div>
-                        <div class="form-field">
-                            <label for="fazenda-longitude">Longitude</label>
-                            <input id="fazenda-longitude" name="longitude" type="number" min="-180" max="180" step="any" placeholder="-46.6333">
-                        </div>
-                        <p class="form-hint full">Informe as coordenadas da fazenda para consultar a previsão de chuva no Open-Meteo. Somente latitude e longitude são enviadas ao serviço.</p>
+                        <input id="fazenda-latitude" name="latitude" type="hidden">
+                        <input id="fazenda-longitude" name="longitude" type="hidden">
                     </div>
                     <div class="form-actions">
                         <button class="primary-button" type="submit" id="create-fazenda-button">Cadastrar fazenda</button>
@@ -401,6 +396,14 @@
                         <div class="form-field full">
                             <label for="talhao-cultura">Cultura (define o nível ideal de umidade)</label>
                             <select id="talhao-cultura" name="idCultura"></select>
+                        </div>
+                        <div class="form-field" id="talhao-umidade-minima-field" hidden>
+                            <label for="talhao-umidade-minima">Umidade mínima (%)</label>
+                            <input id="talhao-umidade-minima" name="umidadeMinimaPersonalizada" type="number" min="0" max="100" step="0.01">
+                        </div>
+                        <div class="form-field" id="talhao-umidade-maxima-field" hidden>
+                            <label for="talhao-umidade-maxima">Umidade máxima (%)</label>
+                            <input id="talhao-umidade-maxima" name="umidadeMaximaPersonalizada" type="number" min="0" max="100" step="0.01">
                         </div>
                     </div>
                     <div class="form-actions">
@@ -563,6 +566,22 @@
                 <button class="primary-button" id="profile-edit-toggle" type="button">Editar dados</button>
             </div>
             <dl class="profile-data" id="profile-data"></dl>
+        </article>
+        <article class="card panel" id="profile-cpf-recovery" hidden>
+            <h2>Completar CPF</h2>
+            <p class="panel-description">Informe seu CPF uma única vez para vinculá-lo à conta. Ele será armazenado com proteção e exibido apenas mascarado.</p>
+            <form id="profile-cpf-form" autocomplete="off">
+                <div class="form-grid">
+                    <div class="form-field full">
+                        <label for="profile-cpf">CPF</label>
+                        <input id="profile-cpf" name="cpf" type="text" inputmode="numeric" maxlength="14"
+                               placeholder="000.000.000-00" required autocomplete="off">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button class="primary-button" type="submit" id="profile-cpf-button">Salvar CPF</button>
+                </div>
+            </form>
         </article>
         <section class="manage-grid two-col profile-edit-section" id="profile-edit-section" hidden aria-label="Editar perfil">
             <article class="card panel">

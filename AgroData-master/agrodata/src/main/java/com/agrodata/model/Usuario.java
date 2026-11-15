@@ -4,7 +4,8 @@ import com.agrodata.security.CriptografiaConverter;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "USUARIO")
+@Table(name = "USUARIO", uniqueConstraints =
+        @UniqueConstraint(name = "uk_usuario_cpf_fingerprint", columnNames = "cpf_fingerprint"))
 public class Usuario {
 
     @Id
@@ -38,6 +39,9 @@ public class Usuario {
     @Column(name = "cpf", length = 255)
     private String cpf;
 
+    @Column(name = "cpf_fingerprint", length = 64)
+    private String cpfFingerprint;
+
     @Convert(converter = CriptografiaConverter.class)
     @Column(name = "email", length = 255)
     private String email;
@@ -65,6 +69,8 @@ public class Usuario {
     public void setNomeCompleto(String nomeCompleto) { this.nomeCompleto = nomeCompleto; }
     public String getCpf() { return cpf; }
     public void setCpf(String cpf) { this.cpf = cpf; }
+    public String getCpfFingerprint() { return cpfFingerprint; }
+    public void setCpfFingerprint(String cpfFingerprint) { this.cpfFingerprint = cpfFingerprint; }
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
     public String getTelefone() { return telefone; }

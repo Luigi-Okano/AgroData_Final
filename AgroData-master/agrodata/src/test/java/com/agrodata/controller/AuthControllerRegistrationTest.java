@@ -10,6 +10,7 @@ import com.agrodata.service.UsuarioService;
 import jakarta.validation.Validation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.*;
 
@@ -44,6 +46,12 @@ class AuthControllerRegistrationTest {
         when(usuarios.existsByUsername("novo.produtor")).thenReturn(false);
         when(encoder.encode("SenhaSegura123!")).thenReturn("hash");
         when(usuarios.save(any(Usuario.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        doAnswer(invocation -> {
+            Usuario usuario = invocation.getArgument(0);
+            usuario.setCpf("52998224725");
+            usuario.setCpfFingerprint("fingerprint");
+            return null;
+        }).when(usuarioService).definirCpf(any(Usuario.class), anyString());
 
         var response = controller.cadastrar(dto);
 
@@ -51,6 +59,10 @@ class AuthControllerRegistrationTest {
         UsuarioResponseDTO body = (UsuarioResponseDTO) response.getBody();
         assertEquals("novo.produtor", body.username());
         assertEquals("PRODUTOR", body.role());
+        ArgumentCaptor<Usuario> usuarioSalvo = ArgumentCaptor.forClass(Usuario.class);
+        verify(usuarios).save(usuarioSalvo.capture());
+        assertEquals("52998224725", usuarioSalvo.getValue().getCpf());
+        verify(usuarioService).definirCpf(any(Usuario.class), same(dto.getCpf()));
         verify(usuarioService).aplicarDados(any(Usuario.class), same(dto));
     }
 
@@ -94,6 +106,14 @@ class AuthControllerRegistrationTest {
 
             dto.setEmail("ana@example.COM.BR");
             assertTrue(validator.validate(dto).isEmpty());
+
+            dto.setCpf("123.456.789-10");
+            assertTrue(validator.validate(dto).isEmpty());
+
+            dto.setCpf("123.456.789-1");
+            assertTrue(validator.validate(dto).stream()
+                    .anyMatch(violation -> violation.getPropertyPath().toString().equals("cpf")));
+            dto.setCpf("529.982.247-25");
 
             dto.setEmail("ana@example.org");
             assertTrue(validator.validate(dto).stream()

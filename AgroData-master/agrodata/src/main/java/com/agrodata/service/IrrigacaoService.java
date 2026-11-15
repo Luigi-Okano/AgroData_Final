@@ -63,8 +63,8 @@ public class IrrigacaoService {
         if (ultima.isEmpty() || !Objects.equals(ultima.get().getIdLeitura(), leitura.getIdLeitura())) return;
 
         Talhao talhao = talhaoRepository.findById(sensor.getIdTalhao()).orElse(null);
-        if (talhao == null || talhao.getIdCultura() == null) return;
-        Cultura cultura = culturaRepository.findById(talhao.getIdCultura()).orElse(null);
+        if (talhao == null) return;
+        Cultura cultura = culturaDoTalhao(talhao);
         if (cultura == null) return;
 
         List<ComandoIrrigacao> abertos = comandoRepository.findByIdTalhaoAndStatusIn(talhao.getIdTalhao(), ABERTOS);
@@ -111,7 +111,7 @@ public class IrrigacaoService {
 
         List<IrrigacaoStatusDTO> resultado = new ArrayList<>();
         for (Talhao t : talhaoRepository.findAll()) {
-            Cultura cultura = t.getIdCultura() != null ? culturas.get(t.getIdCultura()) : null;
+            Cultura cultura = culturaDoTalhao(t, culturas);
             Optional<LeituraSensor> ultima = sensorRepository.findByIdTalhao(t.getIdTalhao()).stream()
                     .filter(this::sensorConfiavel)
                     .map(s -> leituraRepository.findFirstByIdSensorOrderByDataHoraDesc(s.getIdSensor()))
@@ -157,11 +157,30 @@ public class IrrigacaoService {
         return comandoRepository.findByStatusInOrderByCriadoEmAsc(List.of(StatusComando.PENDENTE)).stream()
                 .map(c -> {
                     Talhao t = talhoes.get(c.getIdTalhao());
-                    Cultura cu = t != null && t.getIdCultura() != null ? culturas.get(t.getIdCultura()) : null;
+                    Cultura cu = t != null ? culturaDoTalhao(t, culturas) : null;
                     return new ComandoIrrigacaoDTO(c.getIdComando(), c.getIdTalhao(),
                             t != null ? t.getNome() : null, cu != null ? cu.getNome() : null,
                             c.getUmidadeAtual(), c.getUmidadeMinima(), c.getStatus().name(), c.getCriadoEm());
                 }).toList();
+    }
+
+    private Cultura culturaDoTalhao(Talhao talhao) {
+        Cultura personalizada = culturaPersonalizada(talhao);
+        if (personalizada != null) return personalizada;
+        if (talhao.getIdCultura() == null) return null;
+        return culturaRepository.findById(talhao.getIdCultura()).orElse(null);
+    }
+
+    private Cultura culturaDoTalhao(Talhao talhao, Map<Long, Cultura> culturas) {
+        Cultura personalizada = culturaPersonalizada(talhao);
+        if (personalizada != null) return personalizada;
+        return talhao.getIdCultura() != null ? culturas.get(talhao.getIdCultura()) : null;
+    }
+
+    private Cultura culturaPersonalizada(Talhao talhao) {
+        if (talhao.getUmidadeMinimaPersonalizada() == null
+                || talhao.getUmidadeMaximaPersonalizada() == null) return null;
+        return Cultura.outra(talhao.getUmidadeMinimaPersonalizada(), talhao.getUmidadeMaximaPersonalizada());
     }
 
     /** O sistema de irrigação confirma que executou. Retorna false se o comando não existe / já foi encerrado. */

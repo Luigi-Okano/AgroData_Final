@@ -6,6 +6,7 @@ import com.agrodata.model.Produtor;
 import com.agrodata.model.Usuario;
 import com.agrodata.repository.ProdutorRepository;
 import com.agrodata.repository.UsuarioRepository;
+import com.agrodata.security.CpfFingerprintService;
 import com.agrodata.util.Cpf;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UsuarioService {
@@ -25,11 +27,14 @@ public class UsuarioService {
     private final UsuarioRepository repository;
     private final ProdutorRepository produtorRepository;
     private final PasswordEncoder encoder;
+    private final CpfFingerprintService cpfFingerprintService;
 
-    public UsuarioService(UsuarioRepository repository, ProdutorRepository produtorRepository, PasswordEncoder encoder) {
+    public UsuarioService(UsuarioRepository repository, ProdutorRepository produtorRepository,
+                          PasswordEncoder encoder, CpfFingerprintService cpfFingerprintService) {
         this.repository = repository;
         this.produtorRepository = produtorRepository;
         this.encoder = encoder;
+        this.cpfFingerprintService = cpfFingerprintService;
     }
 
     public Usuario porUsername(String username) {
@@ -73,6 +78,41 @@ public class UsuarioService {
         Usuario u = porUsername(username);
         aplicarDados(u, dto);
         return repository.save(u);
+    }
+
+    @Transactional
+    public Usuario cadastrarCpf(String username, String cpf) {
+        Usuario u = porUsername(username);
+        if (temTexto(u.getCpf())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "CPF já cadastrado.");
+        }
+        definirCpf(u, cpf);
+        aplicarDados(u, new PerfilUpdateDTO());
+        return repository.save(u);
+    }
+
+    public void definirCpf(Usuario usuario, String cpf) {
+        String cpfNumerico = Cpf.somenteDigitos(cpf);
+        if (cpfNumerico.length() != 11) throw invalido("Informe 11 dígitos para o CPF.");
+        String fingerprint = cpfFingerprintService.gerar(cpfNumerico);
+        boolean cpfEmUso = repository.existsByCpfFingerprint(fingerprint);
+        if (!cpfEmUso) {
+            for (Usuario outro : repository.findAllByCpfFingerprintIsNull()) {
+                boolean mesmaConta = usuario.getIdUsuario() != null
+                        && Objects.equals(outro.getIdUsuario(), usuario.getIdUsuario());
+                if (!mesmaConta && temTexto(outro.getCpf())
+                        && cpfNumerico.equals(Cpf.somenteDigitos(outro.getCpf()))) {
+                    cpfEmUso = true;
+                    break;
+                }
+            }
+        }
+        if (cpfEmUso) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "CPF já cadastrado em outra conta.");
+        }
+
+        usuario.setCpf(cpfNumerico);
+        usuario.setCpfFingerprint(fingerprint);
     }
 
     @Transactional

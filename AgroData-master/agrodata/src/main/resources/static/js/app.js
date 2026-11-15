@@ -1,8 +1,22 @@
     const apiBase = "/api/agrodata";
     const state = { sensors: [], talhoes: [], readings: [], selectedSensor: "all", irrigation: [], fazendas: [], culturas: [] };
+    const stateNames = {
+        AC: "Acre", AL: "Alagoas", AP: "Amapá", AM: "Amazonas", BA: "Bahia",
+        CE: "Ceará", DF: "Distrito Federal", ES: "Espírito Santo", GO: "Goiás",
+        MA: "Maranhão", MT: "Mato Grosso", MS: "Mato Grosso do Sul", MG: "Minas Gerais",
+        PA: "Pará", PB: "Paraíba", PR: "Paraná", PE: "Pernambuco", PI: "Piauí",
+        RJ: "Rio de Janeiro", RN: "Rio Grande do Norte", RS: "Rio Grande do Sul",
+        RO: "Rondônia", RR: "Roraima", SC: "Santa Catarina", SP: "São Paulo",
+        SE: "Sergipe", TO: "Tocantins"
+    };
+    const cityCache = new Map();
+    const OTHER_CULTURE = "__OUTRO__";
     let editingSensorId = null;
     let editingFarmId = null;
     let editingTalhaoId = null;
+    let cityLoadVersion = 0;
+    let coordinateLookupVersion = 0;
+    let coordinateLookupPromise = Promise.resolve();
 
     const elements = {
         connection: document.getElementById("connection-label"),
@@ -142,6 +156,7 @@
             const p = await getJson("/api/auth/me");
             const dl = document.getElementById("profile-data");
             dl.replaceChildren();
+            document.getElementById("profile-cpf-recovery").hidden = Boolean(p.cpf);
             const rows = [["Usuário", p.username], ["Perfil", ROLE_LABEL[p.role] || p.role],
                           ["Nome", p.nomeCompleto], ["CPF", p.cpf], ["E-mail", p.email], ["Telefone", p.telefone]];
             for (const [label, value] of rows) {
@@ -169,6 +184,7 @@
         document.getElementById("profile-screen").hidden = true;
         document.getElementById("profile-edit-section").hidden = true;
         document.getElementById("profile-form").reset();
+        document.getElementById("profile-cpf-form").reset();
         document.getElementById("password-form").reset();
         document.getElementById("dashboard-main").hidden = false;
         document.getElementById("profile-nav").hidden = false;
@@ -387,14 +403,122 @@
         select.value = items.some(item => String(valueOf(item)) === selected) ? selected : "";
     }
 
+    function normalizeGeographicName(value) {
+        return String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            .trim().toLocaleLowerCase("pt-BR");
+    }
+
+    async function loadCitiesForState(uf, selectedCity = "") {
+        const requestVersion = ++cityLoadVersion;
+        coordinateLookupVersion++;
+        coordinateLookupPromise = Promise.resolve();
+        document.getElementById("fazenda-latitude").value = "";
+        document.getElementById("fazenda-longitude").value = "";
+
+        const select = document.getElementById("fazenda-cidade");
+        select.disabled = true;
+        select.replaceChildren(new Option(uf ? "Carregando cidades..." : "Selecione o estado primeiro", ""));
+        if (!uf || !stateNames[uf]) return;
+
+        try {
+            let cities = cityCache.get(uf);
+            if (!cities) {
+                const url = `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${encodeURIComponent(uf)}/municipios?orderBy=nome`;
+                const response = await fetch(url, { headers: { Accept: "application/json" } });
+                if (!response.ok) throw new Error(`IBGE respondeu HTTP ${response.status}.`);
+                const records = await response.json();
+                if (!Array.isArray(records)) throw new Error("A lista de municípios retornada pelo IBGE é inválida.");
+                cities = records.map(record => String(record.nome || "").trim()).filter(Boolean);
+                cityCache.set(uf, cities);
+            }
+            if (requestVersion !== cityLoadVersion) return;
+
+            select.replaceChildren(new Option("Selecione a cidade", ""));
+            for (const city of cities) select.add(new Option(city, city));
+            if (selectedCity && !cities.includes(selectedCity)) {
+                select.add(new Option(selectedCity, selectedCity));
+            }
+            select.disabled = false;
+            select.value = selectedCity;
+        } catch (error) {
+            if (requestVersion !== cityLoadVersion) return;
+            select.replaceChildren(new Option("Não foi possível carregar as cidades", ""));
+            if (selectedCity) {
+                select.add(new Option(selectedCity, selectedCity));
+                select.disabled = false;
+                select.value = selectedCity;
+            }
+            showActionMessage(`Não foi possível carregar os municípios do IBGE: ${error.message}`, true);
+        }
+    }
+
+    function loadCoordinatesForSelectedCity() {
+        const requestVersion = ++coordinateLookupVersion;
+        const city = document.getElementById("fazenda-cidade").value;
+        const uf = document.getElementById("fazenda-estado").value;
+        const latitude = document.getElementById("fazenda-latitude");
+        const longitude = document.getElementById("fazenda-longitude");
+        latitude.value = "";
+        longitude.value = "";
+        if (!city || !uf || !stateNames[uf]) return Promise.resolve();
+
+        const params = new URLSearchParams({
+            name: `${city}, ${stateNames[uf]}`,
+            count: "10",
+            language: "pt",
+            format: "json",
+            countryCode: "BR"
+        });
+        const url = `https://geocoding-api.open-meteo.com/v1/search?${params}`;
+        return (async () => {
+            try {
+                const response = await fetch(url, { headers: { Accept: "application/json" } });
+                if (!response.ok) throw new Error(`Open-Meteo respondeu HTTP ${response.status}.`);
+                const data = await response.json();
+                const cityKey = normalizeGeographicName(city);
+                const stateKey = normalizeGeographicName(stateNames[uf]);
+                const results = Array.isArray(data.results) ? data.results : [];
+                const match = results.find(result =>
+                    result.country_code === "BR"
+                    && normalizeGeographicName(result.name) === cityKey
+                    && normalizeGeographicName(result.admin1) === stateKey
+                    && Number.isFinite(result.latitude)
+                    && Number.isFinite(result.longitude));
+                if (!match) throw new Error("Não foi possível localizar as coordenadas dessa cidade.");
+                if (requestVersion !== coordinateLookupVersion) return;
+                latitude.value = String(match.latitude);
+                longitude.value = String(match.longitude);
+            } catch (error) {
+                if (requestVersion === coordinateLookupVersion) {
+                    showActionMessage(`Não foi possível obter as coordenadas da cidade: ${error.message}`, true);
+                }
+            }
+        })();
+    }
+
+    function updateCustomHumidityFields() {
+        const otherSelected = document.getElementById("talhao-cultura").value === OTHER_CULTURE;
+        const minimumField = document.getElementById("talhao-umidade-minima-field");
+        const maximumField = document.getElementById("talhao-umidade-maxima-field");
+        const minimumInput = document.getElementById("talhao-umidade-minima");
+        const maximumInput = document.getElementById("talhao-umidade-maxima");
+        minimumField.hidden = !otherSelected;
+        maximumField.hidden = !otherSelected;
+        minimumInput.required = otherSelected;
+        maximumInput.required = otherSelected;
+    }
+
     function renderTalhaoForm() {
         fillSelect(document.getElementById("talhao-fazenda"),
             state.fazendas.length ? "Selecione a fazenda" : "Nenhuma fazenda cadastrada",
             state.fazendas, f => f.idFazenda,
             f => `${f.nome} · ${f.qtdTalhoes} ${f.qtdTalhoes === 1 ? "talhão" : "talhões"}`);
+        const culturaOptions = [...state.culturas, { idCultura: OTHER_CULTURE, nome: "Outro" }];
         fillSelect(document.getElementById("talhao-cultura"), "Sem cultura definida",
-            state.culturas, c => c.idCultura,
-            c => `${c.nome} (ideal ${formatNumber(c.umidadeMinima, 0)}–${formatNumber(c.umidadeMaxima, 0)}%)`);
+            culturaOptions, c => c.idCultura,
+            c => c.idCultura === OTHER_CULTURE ? "Outro"
+                : `${c.nome} (ideal ${formatNumber(c.umidadeMinima, 0)}–${formatNumber(c.umidadeMaxima, 0)}%)`);
+        updateCustomHumidityFields();
     }
 
     function renderFarmList() {
@@ -499,10 +623,14 @@
             document.getElementById("fazenda-cep").value = cepDigits.length > 5
                 ? `${cepDigits.slice(0, 5)}-${cepDigits.slice(5)}`
                 : cepDigits;
-            document.getElementById("fazenda-cidade").value = farm.cidade || "";
             document.getElementById("fazenda-estado").value = farm.estado || "";
+            await loadCitiesForState(farm.estado || "", farm.cidade || "");
             document.getElementById("fazenda-latitude").value = farm.latitude ?? "";
             document.getElementById("fazenda-longitude").value = farm.longitude ?? "";
+            if (farm.latitude == null || farm.longitude == null) {
+                coordinateLookupPromise = loadCoordinatesForSelectedCity();
+                await coordinateLookupPromise;
+            }
             document.getElementById("fazenda-form-title").textContent = "Editar fazenda";
             document.getElementById("fazenda-form-description").textContent = "Atualize os dados da fazenda e sua localização.";
             document.getElementById("create-fazenda-button").textContent = "Salvar alterações";
@@ -515,6 +643,14 @@
     function resetFarmForm() {
         editingFarmId = null;
         document.getElementById("fazenda-form").reset();
+        cityLoadVersion++;
+        coordinateLookupVersion++;
+        coordinateLookupPromise = Promise.resolve();
+        const citySelect = document.getElementById("fazenda-cidade");
+        citySelect.replaceChildren(new Option("Selecione o estado primeiro", ""));
+        citySelect.disabled = true;
+        document.getElementById("fazenda-latitude").value = "";
+        document.getElementById("fazenda-longitude").value = "";
         document.getElementById("fazenda-form-title").textContent = "Cadastrar fazenda";
         document.getElementById("fazenda-form-description").textContent = "A fazenda será vinculada automaticamente ao seu perfil.";
         document.getElementById("create-fazenda-button").textContent = "Cadastrar fazenda";
@@ -529,7 +665,13 @@
         document.getElementById("talhao-nome").value = plot.nome || "";
         document.getElementById("talhao-area").value = plot.area;
         document.getElementById("talhao-solo").value = plot.tipoSolo || "";
-        document.getElementById("talhao-cultura").value = plot.idCultura == null ? "" : String(plot.idCultura);
+        const customHumidity = plot.umidadeMinimaPersonalizada != null
+            && plot.umidadeMaximaPersonalizada != null;
+        document.getElementById("talhao-cultura").value = customHumidity
+            ? OTHER_CULTURE : plot.idCultura == null ? "" : String(plot.idCultura);
+        document.getElementById("talhao-umidade-minima").value = plot.umidadeMinimaPersonalizada ?? "";
+        document.getElementById("talhao-umidade-maxima").value = plot.umidadeMaximaPersonalizada ?? "";
+        updateCustomHumidityFields();
         document.getElementById("talhao-form-title").textContent = "Editar talhão";
         document.getElementById("talhao-form-description").textContent = "A fazenda não pode ser alterada para preservar os vínculos e históricos do talhão.";
         document.getElementById("create-talhao-button").textContent = "Salvar alterações";
@@ -540,6 +682,7 @@
         editingTalhaoId = null;
         document.getElementById("talhao-form").reset();
         document.getElementById("talhao-fazenda").disabled = false;
+        updateCustomHumidityFields();
         document.getElementById("talhao-form-title").textContent = "Cadastrar talhão";
         document.getElementById("talhao-form-description").textContent = "Ao salvar, um sensor é criado e começa a gerar leituras aleatórias automaticamente.";
         document.getElementById("create-talhao-button").textContent = "Cadastrar talhão";
@@ -939,6 +1082,14 @@
             : digits;
     });
 
+    document.getElementById("fazenda-estado").addEventListener("change", event => {
+        void loadCitiesForState(event.currentTarget.value);
+    });
+    document.getElementById("fazenda-cidade").addEventListener("change", () => {
+        coordinateLookupPromise = loadCoordinatesForSelectedCity();
+    });
+    document.getElementById("talhao-cultura").addEventListener("change", updateCustomHumidityFields);
+
     document.getElementById("fazenda-form").addEventListener("submit", async event => {
         event.preventDefault();
         const formEl = event.currentTarget;
@@ -949,6 +1100,12 @@
         const normalizeText = value => String(value || "").trim().replace(/\s+/g, " ");
         button.disabled = true;
         try {
+            await coordinateLookupPromise;
+            const latitude = document.getElementById("fazenda-latitude").value;
+            const longitude = document.getElementById("fazenda-longitude").value;
+            if (!latitude || !longitude) {
+                throw new Error("Escolha novamente a cidade para obter as coordenadas automaticamente.");
+            }
             const payload = {
                 nome: normalizeText(form.get("nome")),
                 areaTotal: Number(form.get("areaTotal")),
@@ -958,8 +1115,8 @@
                 cep: String(form.get("cep")).replace(/\D/g, ""),
                 cidade: normalizeText(form.get("cidade")),
                 estado: normalizeText(form.get("estado")).toUpperCase(),
-                latitude: String(form.get("latitude") || "").trim() ? Number(form.get("latitude")) : null,
-                longitude: String(form.get("longitude") || "").trim() ? Number(form.get("longitude")) : null
+                latitude: Number(latitude),
+                longitude: Number(longitude)
             };
             if (editing) {
                 await sendJson(`${apiBase}/fazendas/${encodeURIComponent(farmId)}`, "PUT", payload);
@@ -1022,11 +1179,20 @@
         const editing = plotId !== null;
         button.disabled = true;
         try {
+            const selectedCulture = String(form.get("idCultura") || "");
+            const customHumidity = selectedCulture === OTHER_CULTURE;
+            const minimum = customHumidity ? Number(form.get("umidadeMinimaPersonalizada")) : null;
+            const maximum = customHumidity ? Number(form.get("umidadeMaximaPersonalizada")) : null;
+            if (customHumidity && !(minimum >= 0 && maximum <= 100 && minimum < maximum)) {
+                throw new Error("Informe umidade mínima e máxima entre 0 e 100, com mínimo menor que máximo.");
+            }
             const payload = {
                 nome: String(form.get("nome")).trim(),
                 area: Number(form.get("area")),
                 tipoSolo: String(form.get("tipoSolo") || "").trim() || null,
-                idCultura: form.get("idCultura") ? Number(form.get("idCultura")) : null
+                idCultura: selectedCulture && !customHumidity ? Number(selectedCulture) : null,
+                umidadeMinimaPersonalizada: minimum,
+                umidadeMaximaPersonalizada: maximum
             };
             if (editing) {
                 await sendJson(`${apiBase}/talhoes/${encodeURIComponent(plotId)}`, "PUT", payload);
@@ -1097,6 +1263,24 @@
             loadUsers();
         } catch (error) {
             showActionMessage(`Não foi possível atualizar o perfil: ${error.message}`, true);
+        } finally {
+            button.disabled = false;
+        }
+    });
+
+    document.getElementById("profile-cpf-form").addEventListener("submit", async event => {
+        event.preventDefault();
+        const formEl = event.currentTarget;
+        const form = new FormData(formEl);
+        const button = document.getElementById("profile-cpf-button");
+        button.disabled = true;
+        try {
+            await sendJson("/api/auth/me/cpf", "PUT", { cpf: String(form.get("cpf") || "").trim() });
+            formEl.reset();
+            await loadProfile();
+            showActionMessage("CPF cadastrado com sucesso.");
+        } catch (error) {
+            showActionMessage(`Não foi possível cadastrar o CPF: ${error.message}`, true);
         } finally {
             button.disabled = false;
         }

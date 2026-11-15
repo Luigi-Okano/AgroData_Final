@@ -66,11 +66,6 @@ public class TalhaoService {
             produtorAccess.exigirAcessoFazenda(dto.getIdFazenda(), username, admin);
             Fazenda fazenda = fazendaRepository.findById(dto.getIdFazenda())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Fazenda não encontrada."));
-            Cultura cultura = null;
-            if (dto.getIdCultura() != null) {
-                cultura = culturaRepository.findById(dto.getIdCultura())
-                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cultura não encontrada."));
-            }
             BigDecimal disponivel = fazenda.getAreaTotal().subtract(talhaoRepository.somarAreaPorFazenda(fazenda.getIdFazenda()));
             if (dto.getArea().compareTo(disponivel) > 0) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
@@ -79,7 +74,8 @@ public class TalhaoService {
 
             Talhao talhao = new Talhao(fazenda.getIdFazenda(), dto.getNome().trim(), dto.getArea(),
                     dto.getTipoSolo() == null || dto.getTipoSolo().isBlank() ? null : dto.getTipoSolo().trim());
-            talhao.setIdCultura(dto.getIdCultura());
+            Cultura cultura = definirCultura(talhao, dto.getIdCultura(),
+                    dto.getUmidadeMinimaPersonalizada(), dto.getUmidadeMaximaPersonalizada());
             talhao = talhaoRepository.save(talhao);
 
             Sensor sensor = sensorRepository.save(new Sensor(talhao.getIdTalhao(),
@@ -99,7 +95,8 @@ public class TalhaoService {
 
         Talhao t = r.talhao();
         return new TalhaoResponseDTO(t.getIdTalhao(), t.getIdFazenda(), t.getNome(), t.getArea(), t.getTipoSolo(),
-                t.getIdCultura(), r.sensor() != null ? r.sensor().getIdSensor() : null, r.leituras().size());
+                t.getIdCultura(), r.sensor() != null ? r.sensor().getIdSensor() : null, r.leituras().size(),
+                t.getUmidadeMinimaPersonalizada(), t.getUmidadeMaximaPersonalizada());
     }
 
     @Transactional
@@ -109,10 +106,6 @@ public class TalhaoService {
         produtorAccess.exigirAcessoFazenda(talhao.getIdFazenda(), username, admin);
         Fazenda fazenda = fazendaRepository.findById(talhao.getIdFazenda())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Fazenda não encontrada."));
-        if (dto.getIdCultura() != null) {
-            culturaRepository.findById(dto.getIdCultura())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cultura não encontrada."));
-        }
 
         BigDecimal areaOcupada = talhaoRepository.somarAreaPorFazenda(fazenda.getIdFazenda());
         BigDecimal areaDisponivel = fazenda.getAreaTotal().subtract(areaOcupada).add(talhao.getArea());
@@ -121,11 +114,12 @@ public class TalhaoService {
                     "A área excede o espaço disponível na fazenda (" + areaDisponivel.max(BigDecimal.ZERO) + " ha).");
         }
 
+        definirCultura(talhao, dto.getIdCultura(),
+                dto.getUmidadeMinimaPersonalizada(), dto.getUmidadeMaximaPersonalizada());
         talhao.setNome(dto.getNome().trim().replaceAll("\\s+", " "));
         talhao.setArea(dto.getArea());
         talhao.setTipoSolo(dto.getTipoSolo() == null || dto.getTipoSolo().isBlank()
                 ? null : dto.getTipoSolo().trim());
-        talhao.setIdCultura(dto.getIdCultura());
         talhaoRepository.save(talhao);
     }
 
@@ -138,6 +132,30 @@ public class TalhaoService {
                     "Exclua primeiro os sensores, comandos de irrigação, dados climáticos, consumo de água e produção vinculados ao talhão.");
         }
         talhaoRepository.delete(talhao);
+    }
+
+    private Cultura definirCultura(Talhao talhao, Long idCultura,
+                                   Double umidadeMinima, Double umidadeMaxima) {
+        boolean faixaPersonalizada = umidadeMinima != null || umidadeMaxima != null;
+        if (faixaPersonalizada) {
+            if (idCultura != null || umidadeMinima == null || umidadeMaxima == null
+                    || !Double.isFinite(umidadeMinima) || !Double.isFinite(umidadeMaxima)
+                    || umidadeMinima < 0 || umidadeMaxima > 100 || umidadeMinima >= umidadeMaxima) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "A umidade personalizada deve ter mínimo e máximo entre 0 e 100, com mínimo menor que máximo.");
+            }
+            talhao.setIdCultura(null);
+            talhao.setUmidadeMinimaPersonalizada(umidadeMinima);
+            talhao.setUmidadeMaximaPersonalizada(umidadeMaxima);
+            return Cultura.outra(umidadeMinima, umidadeMaxima);
+        }
+
+        talhao.setIdCultura(idCultura);
+        talhao.setUmidadeMinimaPersonalizada(null);
+        talhao.setUmidadeMaximaPersonalizada(null);
+        if (idCultura == null) return null;
+        return culturaRepository.findById(idCultura)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cultura não encontrada."));
     }
 
 }

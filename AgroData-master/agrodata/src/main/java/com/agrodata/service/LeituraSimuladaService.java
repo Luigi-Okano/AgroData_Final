@@ -121,6 +121,10 @@ public class LeituraSimuladaService {
         Talhao talhao = talhaoRepository.findById(sensor.getIdTalhao())
                 .orElseThrow(() -> new IllegalStateException(
                         "Talhão " + sensor.getIdTalhao() + " não encontrado para o sensor " + sensor.getIdSensor()));
+        if (talhao.getUmidadeMinimaPersonalizada() != null
+                && talhao.getUmidadeMaximaPersonalizada() != null) {
+            return Cultura.outra(talhao.getUmidadeMinimaPersonalizada(), talhao.getUmidadeMaximaPersonalizada());
+        }
         if (talhao.getIdCultura() == null) {
             return null;
         }
