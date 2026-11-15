@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Centralize dados de propriedades, talhões, sensores e irrigação para apoiar decisões mais sustentáveis no campo com o AgroData.">
+    <title>AgroData | Irrigação inteligente e sustentável</title>
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<section class="login-overlay landing-page" id="login-overlay" aria-label="Apresentação e acesso ao AgroData">
+    <div class="landing-shell">
+        <header class="landing-header">
+            <a class="landing-brand" href="/" aria-label="AgroData - início">
+                <span class="brand-mark" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M19.5 4.5C12 4.2 6.1 6.4 5.2 11.1c-.6 3.2 2.2 5.1 4.9 4.3 4.7-1.4 7.2-6.2 9.4-10.9Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                        <path d="M4.5 20c2.4-4.1 5.1-6.7 9.1-9.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                    </svg>
+                </span>
+                <span class="landing-brand-copy">
+                    <span class="landing-brand-name">AgroData</span>
+                    <span class="landing-brand-tagline">Gestão inteligente do campo</span>
+                </span>
+            </a>
+            <nav class="landing-nav" aria-label="Navegação da página">
+                <a href="#landing-about">Nossa ideia</a>
+                <a href="#landing-benefits">Vantagens</a>
+            </nav>
+        </header>
+
+        <div class="landing-main">
+            <section class="landing-copy">
+                <p class="landing-kicker"><span class="live-dot" aria-hidden="true"></span> Dados para uma agricultura mais sustentável</p>
+                <h1 class="landing-title">Irrigue com mais <span>inteligência.</span></h1>
+                <p class="landing-intro">A proposta do AgroData é transformar dados do campo em informações úteis para o dia a dia. Ao reunir registros da propriedade, dos talhões e da irrigação, o produtor pode acompanhar melhor cada área e planejar o uso da água com mais consciência.</p>
+
+                <article class="origin-card" id="landing-about">
+                    <span class="origin-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M19.5 4.5C12 4.2 6.1 6.4 5.2 11.1c-.6 3.2 2.2 5.1 4.9 4.3 4.7-1.4 7.2-6.2 9.4-10.9Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M4.5 20c2.4-4.1 5.1-6.7 9.1-9.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                    </span>
+                    <div class="origin-copy">
+                        <strong>Como surgiu a ideia</strong>
+                        <p>A ideia do AgroData surgiu da percepção de que a irrigação nem sempre acompanha as diferenças de cada área da propriedade. Um talhão pode estar com a umidade adequada, enquanto outro já precisa de água; ainda assim, sem dados organizados, muitas vezes se aplica uma estratégia parecida em toda a lavoura. Ao mesmo tempo, informações sobre umidade do solo, chuva, volume irrigado e produtividade ficam espalhadas, dificultando comparações e a identificação de desperdícios. Por isso, a proposta é reunir esses registros em um banco central e formar um histórico que ajude o produtor a entender melhor a propriedade e planejar o manejo com mais consciência.</p>
+                    </div>
+                </article>
+
+                <section class="landing-benefits proposals-panel" id="landing-benefits" aria-labelledby="landing-benefits-title">
+                    <svg class="proposal-watermark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M19.5 4.5C12 4.2 6.1 6.4 5.2 11.1c-.6 3.2 2.2 5.1 4.9 4.3 4.7-1.4 7.2-6.2 9.4-10.9Z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+                        <path d="M4.5 20c2.4-4.1 5.1-6.7 9.1-9.3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+                    </svg>
+                    <div class="proposals-content">
+                        <h2 id="landing-benefits-title">Nossas propostas para o campo</h2>
+                        <p class="proposals-intro">Queremos conectar informações que muitas vezes ficam dispersas e transformá-las em apoio prático para o manejo. Estas são as principais propostas do AgroData:</p>
+                        <div class="benefit-list">
+                            <article class="benefit-item">
+                                <span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 19V5m0 14h16M7 15l4-4 3 2 5-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                                <strong>Reunir dados em um só lugar</strong>
+                                <p>O AgroData foi pensado para reunir informações da propriedade, dos talhões, sensores, condições do solo, clima, práticas de irrigação e histórico das safras. Com os registros organizados, fica mais fácil consultar o que acontece em cada área e acompanhar as mudanças ao longo do tempo, sem depender de anotações dispersas.</p>
+                            </article>
+                            <article class="benefit-item">
+                                <span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5S5.5 10 5.5 14.5a6.5 6.5 0 0 0 13 0C18.5 10 12 3.5 12 3.5Z" stroke="currentColor" stroke-width="1.7"/><path d="M9 15.5a3 3 0 0 0 3 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+                                <strong>Compreender cada talhão</strong>
+                                <p>As condições podem mudar de um talhão para outro e ao longo da safra. Ao relacionar leituras de umidade com a área e o histórico de irrigação, o produtor pode observar diferenças, comparar os talhões e avaliar quando cada um precisa de atenção. A intenção é apoiar decisões de manejo adequadas ao contexto de cada área, em vez de aplicar a mesma estratégia em toda a propriedade.</p>
+                            </article>
+                            <article class="benefit-item">
+                                <span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3v18m0-18c-4 2-6 5-6 8a6 6 0 0 0 12 0c0-3-2-6-6-8Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                                <strong>Usar água com mais consciência</strong>
+                                <p>Acompanhar o volume de água utilizado e a produtividade ao longo das safras ajuda a enxergar padrões e comparar resultados. Esses registros podem revelar oportunidades para reduzir desperdícios, avaliar práticas de irrigação e planejar melhor os próximos ciclos, respeitando as particularidades de cada cultura e talhão.</p>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <aside class="auth-panel" aria-label="Acesso à plataforma">
+                <form class="login-card" id="login-form" autocomplete="on">
+                    <h2>Bem-vindo ao AgroData</h2>
+                    <p>Entre para acompanhar as informações da sua produção.</p>
+                    <label for="login-user">Usuário</label>
+                    <input id="login-user" name="username" type="text" autocomplete="username" maxlength="50" required>
+                    <label for="login-pass">Senha</label>
+                    <div class="password-input-wrap">
+                        <input id="login-pass" name="password" type="password" autocomplete="current-password" maxlength="72" required>
+                        <button class="password-toggle" type="button" data-password-toggle="login-pass" aria-controls="login-pass" aria-pressed="false">Mostrar</button>
+                    </div>
+                    <div class="login-error" id="login-error" role="alert"></div>
+                    <button type="submit" id="login-button">Entrar no painel</button>
+                    <button type="button" class="login-link" id="show-registration">Ainda não tem conta? Cadastre-se</button>
+                </form>
+                <form class="login-card" id="registration-form" autocomplete="on" hidden>
+                    <h2>Crie sua conta</h2>
+                    <p>Informe seus dados para criar a conta de produtor.</p>
+                    <label for="registration-name">Nome completo</label>
+                    <input id="registration-name" name="nomeCompleto" type="text" minlength="3" maxlength="100" required autocomplete="name">
+                    <label for="registration-cpf">CPF</label>
+                    <input id="registration-cpf" name="cpf" type="text" inputmode="numeric" maxlength="14" pattern="([0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2})" placeholder="000.000.000-00" required autocomplete="off">
+                    <label for="registration-email">E-mail</label>
+                    <input id="registration-email" name="email" type="email" maxlength="100" pattern="[^@\s]+@[^@\s]+\.[cC][oO][mM](\.[bB][rR])?" placeholder="nome@exemplo.com" required autocomplete="email">
+                    <label for="registration-phone">Telefone com DDD</label>
+                    <input id="registration-phone" name="telefone" type="tel" inputmode="tel" maxlength="15" pattern="\([0-9]{2}\) [0-9]{4,5}-[0-9]{4}" title="Use DDD entre parênteses e hífen, por exemplo (11) 99999-9999." placeholder="(11) 99999-9999" required autocomplete="tel">
+                    <label for="registration-user">Usuário</label>
+                    <input id="registration-user" name="username" type="text" minlength="3" maxlength="50" pattern="[A-Za-z0-9._\-]+" required autocomplete="username">
+                    <label for="registration-pass">Senha</label>
+                    <div class="password-hint" id="registration-password-hint" aria-live="polite">Use de 8 a 72 caracteres, uma letra maiúscula, um número e um caractere especial.</div>
+                    <div class="password-input-wrap">
+                        <input id="registration-pass" name="password" type="password" minlength="8" maxlength="72" required autocomplete="new-password">
+                        <button class="password-toggle" type="button" data-password-toggle="registration-pass" aria-controls="registration-pass" aria-pressed="false">Mostrar</button>
+                    </div>
+                    <label for="registration-pass-confirm">Confirmar senha</label>
+                    <div class="password-input-wrap">
+                        <input id="registration-pass-confirm" type="password" minlength="8" maxlength="72" required autocomplete="new-password">
+                        <button class="password-toggle" type="button" data-password-toggle="registration-pass-confirm" aria-controls="registration-pass-confirm" aria-pressed="false">Mostrar</button>
+                    </div>
+                    <div class="login-error" id="registration-error" role="alert"></div>
+                    <button type="submit" id="registration-button">Criar conta</button>
+                    <button type="button" class="login-link" id="back-to-login">Já tem conta? Entrar</button>
+                </form>
+                <form class="login-card" id="force-form" autocomplete="off" hidden>
+                    <h2>Troque sua senha</h2>
+                    <p>Você entrou com uma senha provisória. Defina uma nova senha para continuar.</p>
+                    <label for="force-current">Senha provisória</label>
+                    <input id="force-current" type="password" maxlength="72" required autocomplete="current-password">
+                    <label for="force-new">Nova senha (10 a 72 caracteres)</label>
+                    <input id="force-new" type="password" minlength="10" maxlength="72" required autocomplete="new-password">
+                    <div class="login-error" id="force-error" role="alert"></div>
+                    <button type="submit" id="force-button">Salvar nova senha</button>
+                </form>
+            </aside>
+        </div>
+
+        <footer class="landing-footnote">AgroData · Mais contexto para cuidar da sua produção, talhão por talhão.</footer>
+    </div>
+</section>
+<div class="shell" id="dashboard-shell" hidden>
+    <header class="topbar">
+        <div class="brand">
+            <span class="brand-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M19.5 4.5C12 4.2 6.1 6.4 5.2 11.1c-.6 3.2 2.2 5.1 4.9 4.3 4.7-1.4 7.2-6.2 9.4-10.9Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                    <path d="M4.5 20c2.4-4.1 5.1-6.7 9.1-9.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                </svg>
+            </span>
+            <span>AgroData</span>
+        </div>
+        <div class="top-meta"><span class="live-dot"></span><span id="connection-label">Conectando aos dados</span><button type="button" class="profile-nav-button" id="profile-nav" hidden>Meu perfil</button><button type="button" class="logout-button" id="logout-button" hidden>Sair</button></div>
+    </header>
+
+    <div class="action-message" id="action-message" role="status" aria-live="polite"></div>
+    <main id="dashboard-main">
+        <section class="heading">
+            <div>
+                <p class="eyebrow">Painel de monitoramento</p>
+                <h1>Visão geral da operação</h1>
+                <p class="subtitle">Cadastre sensores e acompanhe automaticamente as leituras enviadas por eles.</p>
+            </div>
+            <button class="refresh-button" id="refresh-button" type="button">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M20 7v5h-5M4 17v-5h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5.5 9a7 7 0 0 1 11.8-2L20 12M4 12l2.7 5a7 7 0 0 0 11.8-2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Atualizar dados
+            </button>
+        </section>
+
+        <div class="error-banner" id="error-banner" role="alert"></div>
+        <section class="metrics" aria-label="Indicadores">
+            <article class="card metric">
+                <div class="metric-top">
+                    <span class="metric-label">Sensores cadastrados</span>
+                    <span class="metric-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v3m0 12v3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1M3 12h3m12 0h3M5.6 18.4l2.1-2.1m8.6-8.6 2.1-2.1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/></svg>
+                    </span>
+                </div>
+                <div class="metric-value" id="sensor-count">—</div>
+                <div class="metric-note">Dispositivos monitorados</div>
+            </article>
+            <article class="card metric">
+                <div class="metric-top">
+                    <span class="metric-label">Leituras registradas</span>
+                    <span class="metric-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M4 19V5m0 14h16M7 15l4-4 3 2 5-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                </div>
+                <div class="metric-value" id="reading-count">—</div>
+                <div class="metric-note">Leituras armazenadas no banco</div>
+            </article>
+            <article class="card metric">
+                <div class="metric-top">
+                    <span class="metric-label">Umidade média do solo</span>
+                    <span class="metric-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5S5.5 10 5.5 14.5a6.5 6.5 0 0 0 13 0C18.5 10 12 3.5 12 3.5Z" stroke="currentColor" stroke-width="1.7"/><path d="M9 15.5a3 3 0 0 0 3 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                    </span>
+                </div>
+                <div class="metric-value" id="average-humidity">—</div>
+                <div class="metric-note">Com base nas leituras disponíveis</div>
+            </article>
+            <article class="card metric">
+                <div class="metric-top">
+                    <span class="metric-label">Última atualização</span>
+                    <span class="metric-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7"/><path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                </div>
+                <div class="metric-value" id="latest-reading" style="font-size:23px">—</div>
+                <div class="metric-note" id="latest-date">Aguardando leituras</div>
+            </article>
+        </section>
+
+        <section class="card panel irrigation-panel" aria-label="Irrigação por talhão">
+            <div class="panel-heading">
+                <div>
+                    <h2 style="margin:0;font-size:16px">Irrigação por talhão</h2>
+                    <p class="panel-description">Umidade comparada ao ideal e previsão de chuva para as próximas 24 horas</p>
+                </div>
+                <span class="irrigation-summary" id="irrigation-summary" aria-live="polite">Carregando…</span>
+            </div>
+            <div class="irrigation-list" id="irrigation-list"></div>
+        </section>
+
+        <section class="card table-panel admin-only" aria-label="Usuários cadastrados" style="margin-bottom:17px">
+            <div class="table-top">
+                <div>
+                    <h2>Usuários cadastrados</h2>
+                    <p class="panel-description">Visão de administrador: dados pessoais completos, sem máscara. Os acessos são registrados em log.</p>
+                </div>
+                <span class="table-count" id="user-count"></span>
+            </div>
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Usuário</th><th>Perfil</th><th>Situação</th><th>Nome</th><th>CPF</th><th>E-mail</th><th>Telefone</th><th>Ação</th>
+                    </tr>
+                    </thead>
+                    <tbody id="user-rows"></tbody>
+                </table>
+            </div>
+            <form id="admin-edit-form" autocomplete="off" hidden style="padding:0 22px 22px">
+                <h2 id="admin-edit-title" style="font-size:14px;margin:18px 0 0"></h2>
+                <div class="form-grid">
+                    <div class="form-field full">
+                        <label for="adm-nome">Nome completo</label>
+                        <input id="adm-nome" name="nomeCompleto" type="text" maxlength="100">
+                    </div>
+                    <div class="form-field">
+                        <label for="adm-cpf">CPF</label>
+                        <input id="adm-cpf" name="cpf" type="text" maxlength="14">
+                    </div>
+                    <div class="form-field">
+                        <label for="adm-telefone">Telefone</label>
+                        <input id="adm-telefone" name="telefone" type="tel" maxlength="20">
+                    </div>
+                    <div class="form-field full">
+                        <label for="adm-email">E-mail</label>
+                        <input id="adm-email" name="email" type="email" maxlength="100">
+                    </div>
+                    <div class="form-field">
+                        <label for="adm-role">Perfil</label>
+                        <select id="adm-role" name="role">
+                            <option value="PRODUTOR">Produtor</option>
+                            <option value="ADMIN">Administrador</option>
+                            <option value="IRRIGACAO">Sistema de irrigação</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label for="adm-ativo">Situação</label>
+                        <select id="adm-ativo" name="ativo">
+                            <option value="true">Ativo</option>
+                            <option value="false">Desativado</option>
+                        </select>
+                    </div>
+                    <div class="form-field full">
+                        <label for="adm-senha">Redefinir senha (opcional)</label>
+                        <input id="adm-senha" name="novaSenha" type="password" minlength="10" maxlength="72" autocomplete="new-password" placeholder="deixe em branco para manter">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="ghost-button" id="admin-edit-cancel">Cancelar</button>
+                    <button type="submit" class="primary-button" id="admin-edit-save">Salvar usuário</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="card table-panel admin-only" aria-label="Produtores e fazendas" style="margin-bottom:17px">
+            <div class="table-top">
+                <div>
+                    <h2>Produtores e fazendas</h2>
+                    <p class="panel-description">Visão de administrador. A lavoura é medida em talhões. O acesso é registrado em log.</p>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px">
+                    <span class="table-count" id="producer-count"></span>
+                    <button type="button" class="ghost-button" id="producer-refresh">Atualizar</button>
+                </div>
+            </div>
+            <div id="producer-list"></div>
+        </section>
+
+        <section class="manage-grid two-col" aria-label="Fazendas e talhões">
+            <article class="card panel">
+                <h2 id="fazenda-form-title">Cadastrar fazenda</h2>
+                <p class="panel-description" id="fazenda-form-description">A fazenda será vinculada automaticamente ao seu perfil.</p>
+                <form id="fazenda-form">
+                    <div class="form-grid">
+                        <div class="form-field full">
+                            <label for="fazenda-nome">Nome da fazenda</label>
+                            <input id="fazenda-nome" name="nome" type="text" maxlength="100" required placeholder="Ex.: Fazenda Boa Vista">
+                        </div>
+                        <div class="form-field full">
+                            <label for="fazenda-area">Área total (ha)</label>
+                            <input id="fazenda-area" name="areaTotal" type="number" min="0.01" step="0.01" required>
+                        </div>
+                        <div class="form-field full">
+                            <label for="fazenda-rua">Rua ou estrada</label>
+                            <input id="fazenda-rua" name="rua" type="text" maxlength="150" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="fazenda-numero">Número</label>
+                            <input id="fazenda-numero" name="numero" type="text" maxlength="20" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="fazenda-bairro">Bairro</label>
+                            <input id="fazenda-bairro" name="bairro" type="text" maxlength="100" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="fazenda-cep">CEP</label>
+                            <input id="fazenda-cep" name="cep" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="9" pattern="[0-9]{5}-?[0-9]{3}" required placeholder="00000-000">
+                        </div>
+                        <div class="form-field">
+                            <label for="fazenda-cidade">Cidade</label>
+                            <input id="fazenda-cidade" name="cidade" type="text" maxlength="100" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="fazenda-estado">Estado (UF)</label>
+                            <select id="fazenda-estado" name="estado" required>
+                                <option value="">Selecione a UF</option>
+                                <option value="AC">AC</option><option value="AL">AL</option>
+                                <option value="AM">AM</option><option value="AP">AP</option>
+                                <option value="BA">BA</option><option value="CE">CE</option>
+                                <option value="DF">DF</option><option value="ES">ES</option>
+                                <option value="GO">GO</option><option value="MA">MA</option>
+                                <option value="MG">MG</option>
+                                <option value="MS">MS</option><option value="MT">MT</option>
+                                <option value="PA">PA</option><option value="PB">PB</option>
+                                <option value="PE">PE</option><option value="PI">PI</option>
+                                <option value="PR">PR</option>
+                                <option value="RJ">RJ</option><option value="RN">RN</option>
+                                <option value="RO">RO</option><option value="RR">RR</option>
+                                <option value="RS">RS</option><option value="SC">SC</option>
+                                <option value="SE">SE</option><option value="SP">SP</option>
+                                <option value="TO">TO</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="fazenda-latitude">Latitude</label>
+                            <input id="fazenda-latitude" name="latitude" type="number" min="-90" max="90" step="any" placeholder="-23.5505">
+                        </div>
+                        <div class="form-field">
+                            <label for="fazenda-longitude">Longitude</label>
+                            <input id="fazenda-longitude" name="longitude" type="number" min="-180" max="180" step="any" placeholder="-46.6333">
+                        </div>
+                        <p class="form-hint full">Informe as coordenadas da fazenda para consultar a previsão de chuva no Open-Meteo. Somente latitude e longitude são enviadas ao serviço.</p>
+                    </div>
+                    <div class="form-actions">
+                        <button class="primary-button" type="submit" id="create-fazenda-button">Cadastrar fazenda</button>
+                        <button class="ghost-button" type="button" id="cancel-fazenda-edit-button" hidden>Cancelar edição</button>
+                    </div>
+                </form>
+                <div class="managed-records">
+                    <h3>Fazendas cadastradas</h3>
+                    <div class="record-list" id="fazenda-list"></div>
+                </div>
+            </article>
+
+            <article class="card panel">
+                <h2 id="talhao-form-title">Cadastrar talhão</h2>
+                <p class="panel-description" id="talhao-form-description">Ao salvar, um sensor é criado e começa a gerar leituras aleatórias automaticamente.</p>
+                <form id="talhao-form">
+                    <div class="form-grid">
+                        <div class="form-field full">
+                            <label for="talhao-fazenda">Fazenda</label>
+                            <select id="talhao-fazenda" name="idFazenda" required></select>
+                        </div>
+                        <div class="form-field full">
+                            <label for="talhao-nome">Nome do talhão</label>
+                            <input id="talhao-nome" name="nome" type="text" maxlength="50" required placeholder="Ex.: Talhão Soja 03">
+                        </div>
+                        <div class="form-field">
+                            <label for="talhao-area">Área (ha)</label>
+                            <input id="talhao-area" name="area" type="number" min="0.01" step="0.01" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="talhao-solo">Tipo de solo</label>
+                            <input id="talhao-solo" name="tipoSolo" type="text" maxlength="50" list="solo-options" placeholder="Argiloso">
+                            <datalist id="solo-options">
+                                <option value="Argiloso"></option><option value="Arenoso"></option>
+                                <option value="Humífero"></option><option value="Médio"></option>
+                            </datalist>
+                        </div>
+                        <div class="form-field full">
+                            <label for="talhao-cultura">Cultura (define o nível ideal de umidade)</label>
+                            <select id="talhao-cultura" name="idCultura"></select>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="primary-button" type="submit" id="create-talhao-button">Cadastrar talhão</button>
+                        <button class="ghost-button" type="button" id="cancel-talhao-edit-button" hidden>Cancelar edição</button>
+                    </div>
+                </form>
+                <div class="managed-records">
+                    <h3>Talhões cadastrados</h3>
+                    <div class="record-list" id="talhao-list"></div>
+                </div>
+            </article>
+        </section>
+
+        <section class="manage-grid admin-only" aria-label="Cadastrar usuário">
+            <article class="card panel">
+                <h2>Cadastrar usuário</h2>
+                <p class="panel-description">Cria um acesso ao painel. A senha precisa ter de 10 a 72 caracteres.</p>
+                <form id="user-form" autocomplete="off">
+                    <div class="form-grid">
+                        <div class="form-field full">
+                            <label for="user-name">Usuário</label>
+                            <input id="user-name" name="username" type="text" minlength="3" maxlength="50" pattern="[A-Za-z0-9._\-]+" required autocomplete="off" placeholder="letras, números, . _ -">
+                        </div>
+                        <div class="form-field full">
+                            <label for="user-pass">Senha</label>
+                            <input id="user-pass" name="password" type="password" minlength="10" maxlength="72" required autocomplete="new-password">
+                        </div>
+                        <div class="form-field full">
+                            <label for="user-fullname">Nome completo (opcional)</label>
+                            <input id="user-fullname" name="nomeCompleto" type="text" maxlength="100" autocomplete="off">
+                        </div>
+                        <div class="form-field full">
+                            <label for="user-role">Perfil</label>
+                            <select id="user-role" name="role">
+                                <option value="PRODUTOR">Produtor (consulta e registra leituras)</option>
+                                <option value="ADMIN">Administrador (acesso total)</option>
+                                <option value="IRRIGACAO">Sistema de irrigação (integração)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="primary-button" type="submit" id="create-user-button">Cadastrar usuário</button>
+                    </div>
+                </form>
+            </article>
+        </section>
+
+        <section class="manage-grid" aria-label="Gerenciar sensores">
+            <article class="card panel">
+                <h2 id="sensor-form-title">Cadastrar sensor</h2>
+                <p class="panel-description" id="sensor-form-description">Escolha um talhão já cadastrado para vincular o sensor.</p>
+                <form id="sensor-form">
+                    <div class="form-grid">
+                        <div class="form-field full">
+                            <label for="sensor-talhao">Talhão</label>
+                            <select id="sensor-talhao" name="idTalhao" required>
+                                <option value="">Carregando talhões...</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="sensor-type">Tipo de sensor</label>
+                            <select id="sensor-type" name="tipoSensor" required>
+                                <option value="" selected disabled>Selecione o tipo de sensor</option>
+                                <option value="Umidade do Solo">Umidade do Solo</option>
+                                <option value="Umidade e Temperatura do Solo">Umidade e Temperatura do Solo</option>
+                                <option value="Multissensores Climáticos">Multissensores Climáticos</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="sensor-date">Data de instalação</label>
+                            <input id="sensor-date" name="dataInstalacao" type="date">
+                        </div>
+                        <div class="form-field full">
+                            <label for="sensor-status">Status</label>
+                            <select id="sensor-status" name="status">
+                                <option value="ATIVO">Ativo</option>
+                                <option value="INATIVO">Inativo</option>
+                                <option value="MANUTENCAO">Em manutenção</option>
+                            </select>
+                        </div>
+                    </div>
+                    <p class="form-hint" id="talhao-hint">O sensor depende de um talhão existente no banco.</p>
+                    <div class="form-actions">
+                        <button class="ghost-button" id="cancel-sensor-edit-button" type="button" hidden>Cancelar edição</button>
+                        <button class="primary-button" id="create-sensor-button" type="submit" disabled>Cadastrar sensor</button>
+                    </div>
+                </form>
+            </article>
+        </section>
+
+        <section class="content-grid">
+            <article class="card panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Umidade do solo</h2>
+                        <p class="panel-description">Histórico recente das leituras registradas</p>
+                    </div>
+                    <label>
+                        <span class="sr-only" style="position:absolute;left:-10000px">Filtrar por sensor</span>
+                        <select class="sensor-select" id="sensor-filter" aria-label="Filtrar por sensor">
+                            <option value="all">Todos os sensores</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="chart-wrap" id="chart" aria-label="Gráfico de umidade"></div>
+            </article>
+
+            <article class="card panel">
+                <h2>Sensores</h2>
+                <p class="panel-description">Dispositivos cadastrados no sistema</p>
+                <div class="sensor-list" id="sensor-list"></div>
+            </article>
+        </section>
+
+        <section class="card table-panel">
+            <div class="table-top">
+                <div>
+                    <h2>Leituras recentes</h2>
+                    <p class="panel-description">Dados recebidos dos sensores</p>
+                </div>
+                <span class="table-count" id="table-count"></span>
+            </div>
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Sensor</th>
+                        <th>Data e hora</th>
+                        <th>Umidade do solo</th>
+                        <th>Temperatura</th>
+                        <th>Ação</th>
+                    </tr>
+                    </thead>
+                    <tbody id="reading-rows"></tbody>
+                </table>
+            </div>
+        </section>
+        <footer class="footer" id="updated-at">Os dados são carregados diretamente da API AgroData.</footer>
+    </main>
+
+    <section class="profile-screen" id="profile-screen" hidden aria-label="Meu perfil">
+        <div class="heading profile-heading">
+            <div>
+                <p class="eyebrow">Conta AgroData</p>
+                <h1>Meu perfil</h1>
+                <p class="subtitle">Consulte seus dados pessoais e escolha quando deseja atualizá-los.</p>
+            </div>
+            <div class="profile-actions">
+                <button class="ghost-button" id="profile-back" type="button">Voltar ao painel</button>
+                <button class="refresh-button" id="profile-refresh" type="button">Atualizar dados</button>
+            </div>
+        </div>
+        <article class="card panel profile-card">
+            <div class="panel-heading">
+                <div>
+                    <h2>Dados da conta</h2>
+                    <p class="panel-description">Informações pessoais protegidas e exibidas com mascaramento quando aplicável.</p>
+                </div>
+                <button class="primary-button" id="profile-edit-toggle" type="button">Editar dados</button>
+            </div>
+            <dl class="profile-data" id="profile-data"></dl>
+        </article>
+        <section class="manage-grid two-col profile-edit-section" id="profile-edit-section" hidden aria-label="Editar perfil">
+            <article class="card panel">
+                <h2>Atualizar dados pessoais</h2>
+                <form id="profile-form" autocomplete="off">
+                    <div class="form-grid">
+                        <div class="form-field full">
+                            <label for="profile-nome">Nome completo</label>
+                            <input id="profile-nome" name="nomeCompleto" type="text" maxlength="100" autocomplete="off">
+                        </div>
+                        <div class="form-field">
+                            <label for="profile-telefone">Telefone</label>
+                            <input id="profile-telefone" name="telefone" type="tel" maxlength="20" autocomplete="off" placeholder="(00) 00000-0000">
+                        </div>
+                        <div class="form-field full">
+                            <label for="profile-email">E-mail</label>
+                            <input id="profile-email" name="email" type="email" maxlength="100" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="primary-button" type="submit" id="profile-button">Salvar alterações</button>
+                        <button class="ghost-button" type="button" id="profile-cancel">Cancelar</button>
+                    </div>
+                </form>
+            </article>
+            <article class="card panel">
+                <h2>Alterar senha</h2>
+                <p class="panel-description">Informe a senha atual e escolha uma nova (8 a 72 caracteres).</p>
+                <form id="password-form" autocomplete="off">
+                    <div class="form-grid">
+                        <div class="form-field full">
+                            <label for="pwd-current">Senha atual</label>
+                            <input id="pwd-current" name="senhaAtual" type="password" maxlength="72" required autocomplete="current-password">
+                        </div>
+                        <div class="form-field full">
+                            <label for="pwd-new">Nova senha</label>
+                            <input id="pwd-new" name="novaSenha" type="password" minlength="8" maxlength="72" required autocomplete="new-password">
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="primary-button" type="submit" id="password-button">Alterar senha</button>
+                    </div>
+                </form>
+            </article>
+        </section>
+    </section>
+</div>
+
+<script src="/js/app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+# Keep local credentials and development-only secret defaults out of Git.
+.env
+.env.*
+!.env.example
+**/application-dev.properties
+
+# Exclude machine-specific files and generated artifacts.
+**/.vscode/
+**/.idea/
+**/target/
+**/build/
+**/*.log
+*.tar
+Thumbs.db
+.DS_Store
+
+# Local modernization session artifacts are not part of the application.
+.github/modernize/

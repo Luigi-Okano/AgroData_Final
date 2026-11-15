@@ -1,0 +1,48 @@
+databases:
+  - name: agrodata-db
+    databaseName: agrodata
+    user: agrodata
+    plan: free
+    region: virginia
+    ipAllowList: []
+
+services:
+  - type: web
+    name: agrodata
+    runtime: docker
+    plan: free
+    region: virginia
+    dockerContext: ./AgroData-master/agrodata
+    dockerfilePath: ./AgroData-master/agrodata/Dockerfile
+    healthCheckPath: /
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: render
+      - key: DB_HOST
+        fromDatabase:
+          name: agrodata-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: agrodata-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: agrodata-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: agrodata-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: agrodata-db
+          property: password
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATA_ENCRYPTION_KEY
+        sync: false
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_PASSWORD
+        sync: false
