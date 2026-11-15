@@ -40,7 +40,8 @@ public class SecurityConfig {
                 .referrerPolicy(r -> r.policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.NO_REFERRER))
                 .contentSecurityPolicy(csp -> csp.policyDirectives(
                     "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; "
-                    + "img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'")))
+                    + "img-src 'self' data:; connect-src 'self' https://servicodados.ibge.gov.br "
+                    + "https://geocoding-api.open-meteo.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'")))
             .authorizeHttpRequests(a -> a
                 // Painel estático (a tela de login fica nele; os dados só vêm da API autenticada)
                 .requestMatchers(HttpMethod.GET, "/", "/index.html", "/favicon.ico").permitAll()
