@@ -10,8 +10,8 @@
 <body>
 <section class="login-overlay landing-page" id="login-overlay" aria-label="Apresentação e acesso ao AgroData">
     <div class="landing-shell">
-        <header class="landing-header">
-            <a class="landing-brand" href="/" aria-label="AgroData - início">
+        <header class="landing-header" id="landing-top">
+            <a class="landing-brand" href="#landing-top" aria-label="AgroData - início">
                 <span class="brand-mark" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none">
                         <path d="M19.5 4.5C12 4.2 6.1 6.4 5.2 11.1c-.6 3.2 2.2 5.1 4.9 4.3 4.7-1.4 7.2-6.2 9.4-10.9Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
@@ -24,8 +24,9 @@
                 </span>
             </a>
             <nav class="landing-nav" aria-label="Navegação da página">
-                <a href="#landing-about">Nossa ideia</a>
-                <a href="#landing-benefits">Vantagens</a>
+                <a href="#landing-about" data-landing-nav class="active" aria-current="location">Nossa ideia</a>
+                <a href="#landing-benefits" data-landing-nav>Propostas</a>
+                <a class="landing-nav-login" href="#login-form" data-landing-nav>Entrar</a>
             </nav>
         </header>
 
@@ -34,6 +35,34 @@
                 <p class="landing-kicker"><span class="live-dot" aria-hidden="true"></span> Dados para uma agricultura mais sustentável</p>
                 <h1 class="landing-title">Irrigue com mais <span>inteligência.</span></h1>
                 <p class="landing-intro">A proposta do AgroData é transformar dados do campo em informações úteis para o dia a dia. Ao reunir registros da propriedade, dos talhões e da irrigação, o produtor pode acompanhar melhor cada área e planejar o uso da água com mais consciência.</p>
+                <div class="landing-cta-group">
+                    <a class="landing-cta-primary" href="#login-form">Acessar minha conta <span aria-hidden="true">→</span></a>
+                    <a class="landing-cta-secondary" href="#landing-benefits">Conhecer propostas</a>
+                </div>
+
+                <section class="field-gallery" aria-label="Galeria de plantações">
+                    <figure class="field-gallery-frame">
+                        <img id="field-gallery-image" src="/images/plantacao-campo.webp"
+                             alt="Plantação de cereais ao pôr do sol" fetchpriority="high">
+                        <figcaption class="field-gallery-caption">
+                            <span>AgroData no campo</span>
+                            <strong id="field-gallery-title">Cada talhão tem sua própria história.</strong>
+                        </figcaption>
+                    </figure>
+                    <button class="field-gallery-control previous" id="field-gallery-previous"
+                            type="button" aria-label="Ver imagem anterior">‹</button>
+                    <button class="field-gallery-control next" id="field-gallery-next"
+                            type="button" aria-label="Ver próxima imagem">›</button>
+                    <div class="field-gallery-dots" id="field-gallery-dots" role="group"
+                         aria-label="Escolher imagem da plantação">
+                        <button type="button" class="active" data-gallery-slide="0"
+                                aria-label="Imagem 1 de 3" aria-pressed="true"></button>
+                        <button type="button" data-gallery-slide="1"
+                                aria-label="Imagem 2 de 3" aria-pressed="false"></button>
+                        <button type="button" data-gallery-slide="2"
+                                aria-label="Imagem 3 de 3" aria-pressed="false"></button>
+                    </div>
+                </section>
 
                 <article class="origin-card" id="landing-about">
                     <span class="origin-icon" aria-hidden="true">
@@ -624,7 +653,9 @@
                         </div>
                         <div class="form-field full">
                             <label for="pwd-new">Nova senha</label>
-                            <input id="pwd-new" name="novaSenha" type="password" minlength="8" maxlength="72" required autocomplete="new-password">
+                            <div class="password-hint" id="profile-password-hint" aria-live="polite">Use de 8 a 72 caracteres, uma letra maiúscula, um número e um caractere especial.</div>
+                            <input id="pwd-new" name="novaSenha" type="password" minlength="8" maxlength="72"
+                                   required autocomplete="new-password" aria-describedby="profile-password-hint">
                         </div>
                     </div>
                     <div class="form-actions">

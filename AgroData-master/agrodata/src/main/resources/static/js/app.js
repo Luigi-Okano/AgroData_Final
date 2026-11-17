@@ -1457,6 +1457,64 @@
         applyInputMask(event.currentTarget, formatPhone);
     });
 
+    const gallerySlides = [
+        { src: "/images/plantacao-campo.webp", alt: "Plantação de cereais ao pôr do sol", title: "Cada talhão tem sua própria história." },
+        { src: "/images/plantacao-vista-aerea.webp", alt: "Vista aérea de talhões verdes e dourados", title: "Observe a lavoura por novos ângulos." },
+        { src: "/images/plantacao-trigo.webp", alt: "Espigas de trigo em uma plantação", title: "Decisões melhores começam com dados." }
+    ];
+    const galleryImage = document.getElementById("field-gallery-image");
+    const galleryTitle = document.getElementById("field-gallery-title");
+    const galleryDots = [...document.querySelectorAll("[data-gallery-slide]")];
+    let activeGallerySlide = 0;
+
+    function showGallerySlide(index) {
+        activeGallerySlide = (index + gallerySlides.length) % gallerySlides.length;
+        const slide = gallerySlides[activeGallerySlide];
+        galleryImage.src = slide.src;
+        galleryImage.alt = slide.alt;
+        galleryTitle.textContent = slide.title;
+        galleryDots.forEach((dot, dotIndex) => {
+            const active = dotIndex === activeGallerySlide;
+            dot.classList.toggle("active", active);
+            dot.setAttribute("aria-pressed", String(active));
+        });
+    }
+
+    document.getElementById("field-gallery-previous").addEventListener("click", () => {
+        showGallerySlide(activeGallerySlide - 1);
+    });
+    document.getElementById("field-gallery-next").addEventListener("click", () => {
+        showGallerySlide(activeGallerySlide + 1);
+    });
+    galleryDots.forEach(dot => {
+        dot.addEventListener("click", () => showGallerySlide(Number(dot.dataset.gallerySlide)));
+    });
+
+    const landingOverlay = document.getElementById("login-overlay");
+    const landingNavLinks = [...document.querySelectorAll("[data-landing-nav]")];
+    function setActiveLandingLink(targetId) {
+        landingNavLinks.forEach(link => {
+            const active = link.hash === `#${targetId}`;
+            link.classList.toggle("active", active);
+            if (active) link.setAttribute("aria-current", "location");
+            else link.removeAttribute("aria-current");
+        });
+    }
+
+    landingNavLinks.forEach(link => {
+        link.addEventListener("click", () => setActiveLandingLink(link.hash.slice(1)));
+    });
+    if ("IntersectionObserver" in window) {
+        const landingObserver = new IntersectionObserver(entries => {
+            const visible = entries.filter(entry => entry.isIntersecting)
+                .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+            if (visible.length) setActiveLandingLink(visible[0].target.id);
+        }, { root: landingOverlay, rootMargin: "-15% 0px -65% 0px", threshold: [0, 0.2, 0.4] });
+        for (const id of ["landing-about", "landing-benefits", "login-form"]) {
+            landingObserver.observe(document.getElementById(id));
+        }
+    }
+
     const profilePhone = document.getElementById("profile-telefone");
     profilePhone.addEventListener("input", event => {
         applyInputMask(event.currentTarget, formatPhone);
@@ -1468,6 +1526,8 @@
     const registrationError = document.getElementById("registration-error");
     const registrationPasswordHint = document.getElementById("registration-password-hint");
     const registrationPasswordRequirements = "Use de 8 a 72 caracteres, uma letra maiúscula, um número e um caractere especial.";
+    const profileNewPassword = document.getElementById("pwd-new");
+    const profilePasswordHint = document.getElementById("profile-password-hint");
 
     function getRegistrationEmailError(value) {
         const missingAt = !value.includes("@");
@@ -1523,6 +1583,17 @@
         registrationPasswordHint.classList.toggle("password-hint-error", Boolean(error));
         return error;
     }
+
+    function updateProfilePasswordValidity() {
+        const error = getRegistrationPasswordError(profileNewPassword.value);
+        profileNewPassword.setCustomValidity(error);
+        profilePasswordHint.textContent = error || registrationPasswordRequirements;
+        profilePasswordHint.classList.toggle("password-hint-error", Boolean(error));
+        return error;
+    }
+
+    profileNewPassword.addEventListener("input", updateProfilePasswordValidity);
+    profileNewPassword.addEventListener("invalid", updateProfilePasswordValidity);
 
     registrationPassword.addEventListener("input", () => {
         updateRegistrationPasswordValidity();
