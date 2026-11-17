@@ -1,10 +1,14 @@
 package com.agrodata.service;
 
 import com.agrodata.dto.*;
+import com.agrodata.model.EmailProdutor;
 import com.agrodata.model.Role;
 import com.agrodata.model.Produtor;
+import com.agrodata.model.TelefoneProdutor;
 import com.agrodata.model.Usuario;
+import com.agrodata.repository.EmailProdutorRepository;
 import com.agrodata.repository.ProdutorRepository;
+import com.agrodata.repository.TelefoneProdutorRepository;
 import com.agrodata.repository.UsuarioRepository;
 import com.agrodata.security.CpfFingerprintService;
 import com.agrodata.util.Cpf;
@@ -17,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 @Service
@@ -26,13 +31,18 @@ public class UsuarioService {
 
     private final UsuarioRepository repository;
     private final ProdutorRepository produtorRepository;
+    private final EmailProdutorRepository emailRepository;
+    private final TelefoneProdutorRepository telefoneRepository;
     private final PasswordEncoder encoder;
     private final CpfFingerprintService cpfFingerprintService;
 
     public UsuarioService(UsuarioRepository repository, ProdutorRepository produtorRepository,
+                          EmailProdutorRepository emailRepository, TelefoneProdutorRepository telefoneRepository,
                           PasswordEncoder encoder, CpfFingerprintService cpfFingerprintService) {
         this.repository = repository;
         this.produtorRepository = produtorRepository;
+        this.emailRepository = emailRepository;
+        this.telefoneRepository = telefoneRepository;
         this.encoder = encoder;
         this.cpfFingerprintService = cpfFingerprintService;
     }
@@ -54,12 +64,12 @@ public class UsuarioService {
                 ? produtorRepository.findByCpf(cpfAnterior).orElse(null)
                 : null;
         if (temTexto(d.getNomeCompleto())) {
-            String nome = d.getNomeCompleto().trim();
+            String nome = normalizarEspacos(d.getNomeCompleto());
             if (nome.length() < 3) throw invalido("Nome muito curto.");
             u.setNomeCompleto(nome);
         }
         if (temTexto(d.getEmail())) {
-            u.setEmail(d.getEmail().trim().toLowerCase());
+            u.setEmail(d.getEmail().trim().toLowerCase(Locale.ROOT));
         }
         if (temTexto(d.getTelefone())) {
             int digitos = Cpf.somenteDigitos(d.getTelefone()).length();
@@ -77,6 +87,7 @@ public class UsuarioService {
     public Usuario atualizarMeusDados(String username, PerfilUpdateDTO dto) {
         Usuario u = porUsername(username);
         aplicarDados(u, dto);
+        sincronizarContatosNormalizados(u, dto);
         return repository.save(u);
     }
 
@@ -152,6 +163,7 @@ public class UsuarioService {
             throw invalido("Você não pode desativar nem rebaixar a sua própria conta de administrador.");
         }
         aplicarDados(u, dto);
+        sincronizarContatosNormalizados(u, dto);
         if (dto.getRole() != null) u.setRole(dto.getRole());
         if (dto.getAtivo() != null) u.setAtivo(dto.getAtivo());
         if (temTexto(dto.getNovaSenha())) {
@@ -167,6 +179,59 @@ public class UsuarioService {
 
     private static boolean temTexto(String s) {
         return s != null && !s.isBlank();
+    }
+
+    private void sincronizarContatosNormalizados(Usuario usuario, PerfilUpdateDTO dto) {
+        String cpf = Cpf.somenteDigitos(usuario.getCpf());
+        if (cpf.length() != 11) return;
+
+        Produtor produtor = produtorRepository.findByCpf(cpf).orElse(null);
+        if (produtor == null || produtor.getIdProdutor() == null) return;
+
+        if (temTexto(dto.getEmail())) {
+            List<EmailProdutor> emails = emailRepository.findByIdProdutor(produtor.getIdProdutor());
+            EmailProdutor email = null;
+            for (EmailProdutor contato : emails) {
+                if ("Principal".equalsIgnoreCase(contato.getTipo())) {
+                    email = contato;
+                    break;
+                }
+            }
+            if (email == null) {
+                for (EmailProdutor contato : emails) {
+                    if ("Pessoal".equalsIgnoreCase(contato.getTipo())) {
+                        email = contato;
+                        break;
+                    }
+                }
+            }
+            if (email == null) {
+                email = new EmailProdutor(produtor.getIdProdutor(), usuario.getEmail(), "Principal");
+            }
+            email.setEmail(usuario.getEmail());
+            emailRepository.save(email);
+        }
+
+        if (temTexto(dto.getTelefone())) {
+            List<TelefoneProdutor> telefones = telefoneRepository.findByIdProdutor(produtor.getIdProdutor());
+            TelefoneProdutor contatoCelular = null;
+            for (TelefoneProdutor contato : telefones) {
+                if ("Celular".equalsIgnoreCase(contato.getTipo())) {
+                    contatoCelular = contato;
+                    break;
+                }
+            }
+            if (contatoCelular == null) {
+                contatoCelular = new TelefoneProdutor(
+                        produtor.getIdProdutor(), Cpf.somenteDigitos(usuario.getTelefone()), "Celular");
+            }
+            contatoCelular.setTelefone(Cpf.somenteDigitos(usuario.getTelefone()));
+            telefoneRepository.save(contatoCelular);
+        }
+    }
+
+    private static String normalizarEspacos(String valor) {
+        return valor.trim().replaceAll("\\s+", " ");
     }
 
     private static ResponseStatusException invalido(String msg) {

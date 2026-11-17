@@ -594,11 +594,17 @@
                         </div>
                         <div class="form-field">
                             <label for="profile-telefone">Telefone</label>
-                            <input id="profile-telefone" name="telefone" type="tel" maxlength="20" autocomplete="off" placeholder="(00) 00000-0000">
+                            <input id="profile-telefone" name="telefone" type="tel" inputmode="tel" maxlength="15"
+                                   pattern="\([0-9]{2}\) [0-9]{4,5}-[0-9]{4}"
+                                   title="Use DDD entre parênteses e hífen, por exemplo (11) 99999-9999."
+                                   autocomplete="off" placeholder="(00) 00000-0000">
                         </div>
                         <div class="form-field full">
                             <label for="profile-email">E-mail</label>
-                            <input id="profile-email" name="email" type="email" maxlength="100" autocomplete="off">
+                            <input id="profile-email" name="email" type="email" maxlength="100"
+                                   pattern="[^@\s]+@[^@\s]+\.[cC][oO][mM](\.[bB][rR])?"
+                                   title="O e-mail deve terminar em .com ou .com.br."
+                                   autocomplete="off">
                         </div>
                     </div>
                     <div class="form-actions">

@@ -10,7 +10,12 @@ public class PerfilUpdateDTO {
     @Size(max = 100)
     private String nomeCompleto;
 
-    @Email @Size(max = 100)
+    @Email
+    @Size(max = 100)
+    @Pattern(
+            regexp = "^(?:[^\\s@]+@[^\\s@]+\\.com(?:\\.br)?)?$",
+            flags = Pattern.Flag.CASE_INSENSITIVE,
+            message = "o e-mail deve terminar em .com ou .com.br")
     private String email;
 
     @Pattern(regexp = "^[0-9()+\\-\\s]{0,20}$", message = "telefone inválido")
