@@ -1245,7 +1245,8 @@
         const form = new FormData(formEl);
         const payload = {};
         for (const key of ["nomeCompleto", "telefone", "email"]) {
-            const value = String(form.get(key) || "").trim();
+            let value = String(form.get(key) || "").trim();
+            if (key === "email") value = value.toLowerCase();
             if (value) payload[key] = value;
         }
         if (Object.keys(payload).length === 0) {
@@ -1456,7 +1457,13 @@
         applyInputMask(event.currentTarget, formatPhone);
     });
 
+    const profilePhone = document.getElementById("profile-telefone");
+    profilePhone.addEventListener("input", event => {
+        applyInputMask(event.currentTarget, formatPhone);
+    });
+
     const registrationEmail = document.getElementById("registration-email");
+    const profileEmail = document.getElementById("profile-email");
     const registrationPassword = document.getElementById("registration-pass");
     const registrationError = document.getElementById("registration-error");
     const registrationPasswordHint = document.getElementById("registration-password-hint");
@@ -1474,6 +1481,18 @@
     function updateRegistrationEmailValidity() {
         registrationEmail.setCustomValidity(getRegistrationEmailError(registrationEmail.value.trim()));
     }
+
+    function updateProfileEmailValidity() {
+        const value = profileEmail.value.trim();
+        profileEmail.setCustomValidity(value ? getRegistrationEmailError(value) : "");
+    }
+
+    profileEmail.addEventListener("input", updateProfileEmailValidity);
+    profileEmail.addEventListener("blur", () => {
+        profileEmail.value = profileEmail.value.trim().toLowerCase();
+        updateProfileEmailValidity();
+    });
+    profileEmail.addEventListener("invalid", updateProfileEmailValidity);
 
     registrationEmail.addEventListener("input", () => {
         updateRegistrationEmailValidity();
