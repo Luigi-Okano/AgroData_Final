@@ -45,7 +45,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(a -> a
                 // Painel estático (a tela de login fica nele; os dados só vêm da API autenticada)
                 .requestMatchers(HttpMethod.GET, "/", "/index.html", "/favicon.ico").permitAll()
-                .requestMatchers(HttpMethod.GET, "/css/**", "/js/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/css/**", "/js/**", "/images/**").permitAll()
                 .requestMatchers("/error").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/auth/cadastro").permitAll()
