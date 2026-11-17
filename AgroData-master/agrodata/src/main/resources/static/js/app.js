@@ -1460,6 +1460,8 @@
     const gallerySlides = [
         { src: "/images/plantacao-campo.webp", alt: "Plantação de cereais ao pôr do sol", title: "Cada talhão tem sua própria história." },
         { src: "/images/plantacao-vista-aerea.webp", alt: "Vista aérea de talhões verdes e dourados", title: "Observe a lavoura por novos ângulos." },
+        { src: "/images/irrigacao-aspersor.jpg", alt: "Aspersor distribuindo água sobre linhas de cultivo", title: "Acompanhe a irrigação de cada área." },
+        { src: "/images/irrigacao-pivotal.jpg", alt: "Sistema de pivô central em um campo agrícola", title: "Planeje o uso da água com mais contexto." },
         { src: "/images/plantacao-trigo.webp", alt: "Espigas de trigo em uma plantação", title: "Decisões melhores começam com dados." }
     ];
     const galleryImage = document.getElementById("field-gallery-image");

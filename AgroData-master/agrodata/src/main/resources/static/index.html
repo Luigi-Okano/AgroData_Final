@@ -24,20 +24,20 @@
                 </span>
             </a>
             <nav class="landing-nav" aria-label="Navegação da página">
-                <a href="#landing-about" data-landing-nav class="active" aria-current="location">Nossa ideia</a>
-                <a href="#landing-benefits" data-landing-nav>Propostas</a>
+                <a href="#landing-about" data-landing-nav class="active" aria-current="location" aria-label="Economia de água">Água</a>
+                <a href="#landing-benefits" data-landing-nav>Como ajuda</a>
                 <a class="landing-nav-login" href="#login-form" data-landing-nav>Entrar</a>
             </nav>
         </header>
 
         <div class="landing-main">
             <section class="landing-copy">
-                <p class="landing-kicker"><span class="live-dot" aria-hidden="true"></span> Dados para uma agricultura mais sustentável</p>
-                <h1 class="landing-title">Irrigue com mais <span>inteligência.</span></h1>
-                <p class="landing-intro">A proposta do AgroData é transformar dados do campo em informações úteis para o dia a dia. Ao reunir registros da propriedade, dos talhões e da irrigação, o produtor pode acompanhar melhor cada área e planejar o uso da água com mais consciência.</p>
+                <p class="landing-kicker"><span class="live-dot" aria-hidden="true"></span> Informação para cuidar melhor de cada gota</p>
+                <h1 class="landing-title">Economia de água começa <span>com informação.</span></h1>
+                <p class="landing-intro">Reúna dados de umidade, clima e irrigação por talhão para entender necessidades diferentes e planejar melhor o uso da água. O AgroData organiza as informações para apoiar suas decisões no campo.</p>
                 <div class="landing-cta-group">
                     <a class="landing-cta-primary" href="#login-form">Acessar minha conta <span aria-hidden="true">→</span></a>
-                    <a class="landing-cta-secondary" href="#landing-benefits">Conhecer propostas</a>
+                    <a class="landing-cta-secondary" href="#landing-about">Veja como funciona</a>
                 </div>
 
                 <section class="field-gallery" aria-label="Galeria de plantações">
@@ -45,7 +45,7 @@
                         <img id="field-gallery-image" src="/images/plantacao-campo.webp"
                              alt="Plantação de cereais ao pôr do sol" fetchpriority="high">
                         <figcaption class="field-gallery-caption">
-                            <span>AgroData no campo</span>
+                            <span>Água e agricultura</span>
                             <strong id="field-gallery-title">Cada talhão tem sua própria história.</strong>
                         </figcaption>
                     </figure>
@@ -54,51 +54,17 @@
                     <button class="field-gallery-control next" id="field-gallery-next"
                             type="button" aria-label="Ver próxima imagem">›</button>
                     <div class="field-gallery-dots" id="field-gallery-dots" role="group"
-                         aria-label="Escolher imagem da plantação">
+                         aria-label="Escolher imagem do campo">
                         <button type="button" class="active" data-gallery-slide="0"
-                                aria-label="Imagem 1 de 3" aria-pressed="true"></button>
+                                aria-label="Imagem 1 de 5" aria-pressed="true"></button>
                         <button type="button" data-gallery-slide="1"
-                                aria-label="Imagem 2 de 3" aria-pressed="false"></button>
+                                aria-label="Imagem 2 de 5" aria-pressed="false"></button>
                         <button type="button" data-gallery-slide="2"
-                                aria-label="Imagem 3 de 3" aria-pressed="false"></button>
-                    </div>
-                </section>
-
-                <article class="origin-card" id="landing-about">
-                    <span class="origin-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none"><path d="M19.5 4.5C12 4.2 6.1 6.4 5.2 11.1c-.6 3.2 2.2 5.1 4.9 4.3 4.7-1.4 7.2-6.2 9.4-10.9Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M4.5 20c2.4-4.1 5.1-6.7 9.1-9.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-                    </span>
-                    <div class="origin-copy">
-                        <strong>Como surgiu a ideia</strong>
-                        <p>A ideia do AgroData surgiu da percepção de que a irrigação nem sempre acompanha as diferenças de cada área da propriedade. Um talhão pode estar com a umidade adequada, enquanto outro já precisa de água; ainda assim, sem dados organizados, muitas vezes se aplica uma estratégia parecida em toda a lavoura. Ao mesmo tempo, informações sobre umidade do solo, chuva, volume irrigado e produtividade ficam espalhadas, dificultando comparações e a identificação de desperdícios. Por isso, a proposta é reunir esses registros em um banco central e formar um histórico que ajude o produtor a entender melhor a propriedade e planejar o manejo com mais consciência.</p>
-                    </div>
-                </article>
-
-                <section class="landing-benefits proposals-panel" id="landing-benefits" aria-labelledby="landing-benefits-title">
-                    <svg class="proposal-watermark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path d="M19.5 4.5C12 4.2 6.1 6.4 5.2 11.1c-.6 3.2 2.2 5.1 4.9 4.3 4.7-1.4 7.2-6.2 9.4-10.9Z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
-                        <path d="M4.5 20c2.4-4.1 5.1-6.7 9.1-9.3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
-                    </svg>
-                    <div class="proposals-content">
-                        <h2 id="landing-benefits-title">Nossas propostas para o campo</h2>
-                        <p class="proposals-intro">Queremos conectar informações que muitas vezes ficam dispersas e transformá-las em apoio prático para o manejo. Estas são as principais propostas do AgroData:</p>
-                        <div class="benefit-list">
-                            <article class="benefit-item">
-                                <span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 19V5m0 14h16M7 15l4-4 3 2 5-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                                <strong>Reunir dados em um só lugar</strong>
-                                <p>O AgroData foi pensado para reunir informações da propriedade, dos talhões, sensores, condições do solo, clima, práticas de irrigação e histórico das safras. Com os registros organizados, fica mais fácil consultar o que acontece em cada área e acompanhar as mudanças ao longo do tempo, sem depender de anotações dispersas.</p>
-                            </article>
-                            <article class="benefit-item">
-                                <span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5S5.5 10 5.5 14.5a6.5 6.5 0 0 0 13 0C18.5 10 12 3.5 12 3.5Z" stroke="currentColor" stroke-width="1.7"/><path d="M9 15.5a3 3 0 0 0 3 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
-                                <strong>Compreender cada talhão</strong>
-                                <p>As condições podem mudar de um talhão para outro e ao longo da safra. Ao relacionar leituras de umidade com a área e o histórico de irrigação, o produtor pode observar diferenças, comparar os talhões e avaliar quando cada um precisa de atenção. A intenção é apoiar decisões de manejo adequadas ao contexto de cada área, em vez de aplicar a mesma estratégia em toda a propriedade.</p>
-                            </article>
-                            <article class="benefit-item">
-                                <span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3v18m0-18c-4 2-6 5-6 8a6 6 0 0 0 12 0c0-3-2-6-6-8Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                                <strong>Usar água com mais consciência</strong>
-                                <p>Acompanhar o volume de água utilizado e a produtividade ao longo das safras ajuda a enxergar padrões e comparar resultados. Esses registros podem revelar oportunidades para reduzir desperdícios, avaliar práticas de irrigação e planejar melhor os próximos ciclos, respeitando as particularidades de cada cultura e talhão.</p>
-                            </article>
-                        </div>
+                                aria-label="Imagem 3 de 5" aria-pressed="false"></button>
+                        <button type="button" data-gallery-slide="3"
+                                aria-label="Imagem 4 de 5" aria-pressed="false"></button>
+                        <button type="button" data-gallery-slide="4"
+                                aria-label="Imagem 5 de 5" aria-pressed="false"></button>
                     </div>
                 </section>
             </section>
@@ -159,7 +125,62 @@
             </aside>
         </div>
 
-        <footer class="landing-footnote">AgroData · Mais contexto para cuidar da sua produção, talhão por talhão.</footer>
+        <section class="water-section" id="landing-about" aria-labelledby="water-section-title">
+            <div class="water-section-copy">
+                <p class="landing-kicker">AgroData e economia de água</p>
+                <h2 id="water-section-title">Cada talhão tem uma necessidade. Cada gota tem valor.</h2>
+                <p>Clima, solo e cultura mudam de uma área para outra. Com os registros de umidade e irrigação organizados, você ganha contexto para comparar talhões, acompanhar o que já foi aplicado e planejar os próximos manejos com mais consciência.</p>
+                <p class="water-section-note">O AgroData ajuda a visualizar informações — a decisão de irrigar continua nas mãos de quem conhece a lavoura.</p>
+            </div>
+            <div class="water-photo-grid" aria-label="Imagens de irrigação no campo">
+                <figure class="water-photo water-photo-sprinkler">
+                    <img src="/images/irrigacao-aspersor.jpg" alt="Aspersor distribuindo água sobre linhas de cultivo" loading="lazy">
+                    <figcaption>Observe a irrigação no contexto da lavoura</figcaption>
+                </figure>
+                <figure class="water-photo water-photo-pivot">
+                    <img src="/images/irrigacao-pivotal.jpg" alt="Sistema de pivô central em um campo agrícola" loading="lazy">
+                    <figcaption>Compare áreas e acompanhe o manejo</figcaption>
+                </figure>
+            </div>
+            <p class="photo-credit">Fotos: <a href="https://www.pexels.com/photo/close-up-of-sprinkler-on-field-17765487/" target="_blank" rel="noopener noreferrer">Mark Stebnicki</a> e <a href="https://www.pexels.com/photo/agricultural-sprinklers-on-a-farm-field-12532707/" target="_blank" rel="noopener noreferrer">Robert So</a> / Pexels</p>
+        </section>
+
+        <section class="landing-benefits proposals-panel" id="landing-benefits" aria-labelledby="landing-benefits-title">
+            <div class="proposals-content">
+                <p class="landing-kicker">Da informação à decisão</p>
+                <h2 id="landing-benefits-title">Mais clareza para usar água com consciência</h2>
+                <p class="proposals-intro">O AgroData reúne informações da propriedade, dos talhões, sensores, clima e irrigação para você acompanhar o campo com mais contexto.</p>
+                <div class="benefit-list">
+                    <article class="benefit-item benefit-water">
+                        <span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5S5.5 10 5.5 14.5a6.5 6.5 0 0 0 13 0C18.5 10 12 3.5 12 3.5Z" stroke="currentColor" stroke-width="1.7"/><path d="M9 15.5a3 3 0 0 0 3 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+                        <strong>Acompanhe o uso da água</strong>
+                        <p>Registre práticas de irrigação e compare com leituras e condições de cada área para perceber padrões e oportunidades de reduzir desperdícios.</p>
+                    </article>
+                    <article class="benefit-item">
+                        <span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5S5.5 10 5.5 14.5a6.5 6.5 0 0 0 13 0C18.5 10 12 3.5 12 3.5Z" stroke="currentColor" stroke-width="1.7"/><path d="M9 15.5a3 3 0 0 0 3 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+                        <strong>Entenda cada talhão</strong>
+                        <p>Consulte a umidade e o histórico por área para enxergar diferenças e evitar tratar toda a propriedade como se fosse igual.</p>
+                    </article>
+                    <article class="benefit-item">
+                        <span class="benefit-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 19V5m0 14h16M7 15l4-4 3 2 5-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                        <strong>Organize para comparar</strong>
+                        <p>Reúna registros de sensores, clima e produção em um só lugar e acompanhe a evolução ao longo do tempo.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <article class="origin-card" id="landing-story">
+            <span class="origin-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M19.5 4.5C12 4.2 6.1 6.4 5.2 11.1c-.6 3.2 2.2 5.1 4.9 4.3 4.7-1.4 7.2-6.2 9.4-10.9Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M4.5 20c2.4-4.1 5.1-6.7 9.1-9.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            </span>
+            <div class="origin-copy">
+                <strong>Por que criamos o AgroData</strong>
+                <p>Informações de umidade, chuva, volume irrigado e produtividade costumam ficar espalhadas. O AgroData nasceu para reunir esses registros e ajudar o produtor a compreender melhor a propriedade e planejar o uso da água com mais contexto.</p>
+            </div>
+        </article>
+
+        <footer class="landing-footnote">AgroData · Mais contexto para cuidar da produção e de cada gota.</footer>
     </div>
 </section>
 <div class="shell" id="dashboard-shell" hidden>
