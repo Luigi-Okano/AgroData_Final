@@ -1462,8 +1462,11 @@
         { src: "/images/plantacao-vista-aerea.webp", alt: "Vista aérea de talhões verdes e dourados", title: "Observe a lavoura por novos ângulos." },
         { src: "/images/irrigacao-aspersor.jpg", alt: "Aspersor distribuindo água sobre linhas de cultivo", title: "Acompanhe a irrigação de cada área." },
         { src: "/images/irrigacao-pivotal.jpg", alt: "Sistema de pivô central em um campo agrícola", title: "Planeje o uso da água com mais contexto." },
+        { src: "/images/irrigacao-gotejamento.jpg", alt: "Linhas de gotejamento entre plantas jovens", title: "Conheça diferentes formas de irrigar." },
+        { src: "/images/cultivo-rega.jpg", alt: "Muda recebendo água em solo seco", title: "Cada gota importa em cada etapa do cultivo." },
         { src: "/images/plantacao-trigo.webp", alt: "Espigas de trigo em uma plantação", title: "Decisões melhores começam com dados." }
     ];
+    const gallery = document.getElementById("field-gallery");
     const galleryImage = document.getElementById("field-gallery-image");
     const galleryTitle = document.getElementById("field-gallery-title");
     const galleryDots = [...document.querySelectorAll("[data-gallery-slide]")];
@@ -1491,6 +1494,15 @@
     galleryDots.forEach(dot => {
         dot.addEventListener("click", () => showGallerySlide(Number(dot.dataset.gallerySlide)));
     });
+    gallery.addEventListener("keydown", event => {
+        if (event.key === "ArrowLeft") {
+            event.preventDefault();
+            showGallerySlide(activeGallerySlide - 1);
+        } else if (event.key === "ArrowRight") {
+            event.preventDefault();
+            showGallerySlide(activeGallerySlide + 1);
+        }
+    });
 
     const landingOverlay = document.getElementById("login-overlay");
     const landingNavLinks = [...document.querySelectorAll("[data-landing-nav]")];
@@ -1512,7 +1524,7 @@
                 .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
             if (visible.length) setActiveLandingLink(visible[0].target.id);
         }, { root: landingOverlay, rootMargin: "-15% 0px -65% 0px", threshold: [0, 0.2, 0.4] });
-        for (const id of ["landing-about", "landing-benefits", "login-form"]) {
+        for (const id of ["landing-about", "landing-story", "landing-benefits"]) {
             landingObserver.observe(document.getElementById(id));
         }
     }

@@ -24,29 +24,30 @@
                 </span>
             </a>
             <nav class="landing-nav" aria-label="Navegação da página">
-                <a href="#landing-about" data-landing-nav class="active" aria-current="location" aria-label="Economia de água">Água</a>
-                <a href="#landing-benefits" data-landing-nav>Como ajuda</a>
-                <a class="landing-nav-login" href="#login-form" data-landing-nav>Entrar</a>
+                <a href="#landing-about" data-landing-nav class="active" aria-current="location">Nossa ideia</a>
+                <a href="#landing-story" data-landing-nav>Como surgiu</a>
+                <a href="#landing-benefits" data-landing-nav>Vantagens</a>
             </nav>
         </header>
 
-        <div class="landing-main">
+        <div class="landing-main" id="landing-top">
             <section class="landing-copy">
                 <p class="landing-kicker"><span class="live-dot" aria-hidden="true"></span> Informação para cuidar melhor de cada gota</p>
-                <h1 class="landing-title">Economia de água começa <span>com informação.</span></h1>
+                <h1 class="landing-title">Irrigue com mais <span>inteligência.</span></h1>
                 <p class="landing-intro">Reúna dados de umidade, clima e irrigação por talhão para entender necessidades diferentes e planejar melhor o uso da água. O AgroData organiza as informações para apoiar suas decisões no campo.</p>
                 <div class="landing-cta-group">
                     <a class="landing-cta-primary" href="#login-form">Acessar minha conta <span aria-hidden="true">→</span></a>
                     <a class="landing-cta-secondary" href="#landing-about">Veja como funciona</a>
                 </div>
 
-                <section class="field-gallery" aria-label="Galeria de plantações">
+                <section class="field-gallery" id="field-gallery" tabindex="0"
+                         aria-label="Galeria interativa de plantações e irrigação" aria-roledescription="carrossel">
                     <figure class="field-gallery-frame">
                         <img id="field-gallery-image" src="/images/plantacao-campo.webp"
                              alt="Plantação de cereais ao pôr do sol" fetchpriority="high">
                         <figcaption class="field-gallery-caption">
                             <span>Água e agricultura</span>
-                            <strong id="field-gallery-title">Cada talhão tem sua própria história.</strong>
+                            <strong id="field-gallery-title" aria-live="polite">Cada talhão tem sua própria história.</strong>
                         </figcaption>
                     </figure>
                     <button class="field-gallery-control previous" id="field-gallery-previous"
@@ -56,15 +57,19 @@
                     <div class="field-gallery-dots" id="field-gallery-dots" role="group"
                          aria-label="Escolher imagem do campo">
                         <button type="button" class="active" data-gallery-slide="0"
-                                aria-label="Imagem 1 de 5" aria-pressed="true"></button>
+                                aria-label="Imagem 1 de 7" aria-pressed="true"></button>
                         <button type="button" data-gallery-slide="1"
-                                aria-label="Imagem 2 de 5" aria-pressed="false"></button>
+                                aria-label="Imagem 2 de 7" aria-pressed="false"></button>
                         <button type="button" data-gallery-slide="2"
-                                aria-label="Imagem 3 de 5" aria-pressed="false"></button>
+                                aria-label="Imagem 3 de 7" aria-pressed="false"></button>
                         <button type="button" data-gallery-slide="3"
-                                aria-label="Imagem 4 de 5" aria-pressed="false"></button>
+                                aria-label="Imagem 4 de 7" aria-pressed="false"></button>
                         <button type="button" data-gallery-slide="4"
-                                aria-label="Imagem 5 de 5" aria-pressed="false"></button>
+                                aria-label="Imagem 5 de 7" aria-pressed="false"></button>
+                        <button type="button" data-gallery-slide="5"
+                                aria-label="Imagem 6 de 7" aria-pressed="false"></button>
+                        <button type="button" data-gallery-slide="6"
+                                aria-label="Imagem 7 de 7" aria-pressed="false"></button>
                     </div>
                 </section>
             </section>
@@ -142,7 +147,7 @@
                     <figcaption>Compare áreas e acompanhe o manejo</figcaption>
                 </figure>
             </div>
-            <p class="photo-credit">Fotos: <a href="https://www.pexels.com/photo/close-up-of-sprinkler-on-field-17765487/" target="_blank" rel="noopener noreferrer">Mark Stebnicki</a> e <a href="https://www.pexels.com/photo/agricultural-sprinklers-on-a-farm-field-12532707/" target="_blank" rel="noopener noreferrer">Robert So</a> / Pexels</p>
+            <p class="photo-credit">Fotos: <a href="https://www.pexels.com/photo/close-up-of-sprinkler-on-field-17765487/" target="_blank" rel="noopener noreferrer">Mark Stebnicki</a>, <a href="https://www.pexels.com/photo/agricultural-sprinklers-on-a-farm-field-12532707/" target="_blank" rel="noopener noreferrer">Robert So</a>, <a href="https://www.pexels.com/photo/green-plant-on-brown-soil-10606633/" target="_blank" rel="noopener noreferrer">Anil Sharma</a> e <a href="https://www.pexels.com/photo/watering-process-of-thin-green-sprout-4207907/" target="_blank" rel="noopener noreferrer">Karola G.</a> / Pexels</p>
         </section>
 
         <section class="landing-benefits proposals-panel" id="landing-benefits" aria-labelledby="landing-benefits-title">
@@ -180,7 +185,7 @@
             </div>
         </article>
 
-        <footer class="landing-footnote">AgroData · Mais contexto para cuidar da produção e de cada gota.</footer>
+        <footer class="landing-footnote">AgroData · Mais contexto para cuidar da sua produção, talhão por talhão.</footer>
     </div>
 </section>
 <div class="shell" id="dashboard-shell" hidden>

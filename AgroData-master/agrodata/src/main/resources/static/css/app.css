@@ -8,6 +8,8 @@
             --green: #27764d;
             --green-dark: #1c5d3b;
             --green-soft: #eaf4ed;
+            --teal: #167c7d;
+            --water-blue: #176f9d;
             --lime: #d7ed9f;
             --amber: #80510e;
             --shadow: 0 12px 32px rgba(34, 55, 42, .055);
@@ -246,7 +248,7 @@
         .landing-brand-tagline { color: var(--muted); font-size: 10px; letter-spacing: .04em; }
         .landing-nav { display: flex; align-items: center; gap: 8px; }
         .landing-nav a { position: relative; padding: 10px 12px; border-radius: 10px; color: #40574a; font-size: 13px; font-weight: 650; text-decoration: none; transition: background .18s, color .18s, transform .18s; }
-        .landing-nav a:hover, .landing-nav a.active { background: rgba(39, 118, 77, .09); color: var(--green-dark); }
+        .landing-nav a:hover, .landing-nav a.active { background: rgba(22, 124, 125, .1); color: var(--teal); }
         .landing-nav a:hover { transform: translateY(-1px); }
         .landing-nav .landing-nav-login { margin-left: 7px; padding: 10px 17px; background: var(--green); color: #fff; box-shadow: 0 7px 16px rgba(39, 118, 77, .17); }
         .landing-nav .landing-nav-login:hover { background: var(--green-dark); color: #fff; }
@@ -273,28 +275,28 @@
         .field-gallery-caption { position: absolute; z-index: 1; right: 68px; bottom: 23px; left: 23px; display: grid; gap: 6px; color: white; text-shadow: 0 1px 5px rgba(0, 0, 0, .28); }
         .field-gallery-caption span { font-size: 10px; font-weight: 750; letter-spacing: .14em; text-transform: uppercase; }
         .field-gallery-caption strong { font-size: clamp(16px, 2vw, 21px); letter-spacing: -.025em; }
-        .field-gallery-control { position: absolute; z-index: 2; top: 50%; display: grid; width: 38px; height: 38px; place-items: center; transform: translateY(-50%); border: 1px solid rgba(255, 255, 255, .7); border-radius: 50%; background: rgba(15, 34, 22, .38); color: white; cursor: pointer; font-size: 25px; line-height: 1; backdrop-filter: blur(8px); transition: background .18s, transform .18s; }
+        .field-gallery-control { position: absolute; z-index: 2; top: 50%; display: grid; width: 38px; height: 38px; place-items: center; transform: translateY(-50%); border: 1px solid rgba(255, 255, 255, .7); border-radius: 50%; background: rgba(17, 66, 75, .48); color: white; cursor: pointer; font-size: 25px; line-height: 1; backdrop-filter: blur(8px); transition: background .18s, transform .18s; }
         .field-gallery-control:hover { transform: translateY(-50%) scale(1.08); background: rgba(15, 34, 22, .68); }
         .field-gallery-control.previous { left: 13px; }
         .field-gallery-control.next { right: 13px; }
         .field-gallery-dots { position: absolute; z-index: 2; right: 23px; bottom: 25px; display: flex; gap: 7px; }
         .field-gallery-dots button { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 10px; background: rgba(255, 255, 255, .6); cursor: pointer; transition: width .2s, background .2s; }
-        .field-gallery-dots button.active { width: 22px; background: white; }
-        .landing-main [id] { scroll-margin-top: 88px; }
-        .landing-nav a:focus-visible, .landing-cta-group a:focus-visible, .field-gallery-control:focus-visible, .field-gallery-dots button:focus-visible { outline: 3px solid #d7ed9f; outline-offset: 3px; }
-        .water-section { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); align-items: center; gap: clamp(24px, 4vw, 52px); margin-bottom: 30px; padding: clamp(24px, 4vw, 48px); border: 1px solid rgba(39, 70, 49, .08); border-radius: 26px; background: linear-gradient(135deg, #e9f3e8, #f8faf5 72%); }
-        .water-section-copy .landing-kicker { margin-bottom: 12px; }
-        .water-section-copy h2 { max-width: 520px; margin: 0 0 14px; color: #1b3325; font-size: clamp(25px, 3.2vw, 38px); letter-spacing: -.045em; line-height: 1.12; }
+        .field-gallery-dots button.active { width: 22px; background: #d7f0f3; }
+        .landing-shell [id] { scroll-margin-top: 88px; }
+        .landing-nav a:focus-visible, .landing-cta-group a:focus-visible, .field-gallery-control:focus-visible, .field-gallery-dots button:focus-visible { outline: 3px solid #9de0df; outline-offset: 3px; }
+        .water-section { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); align-items: center; gap: clamp(24px, 4vw, 52px); margin-bottom: 30px; padding: clamp(24px, 4vw, 48px); border: 1px solid rgba(23, 111, 157, .18); border-radius: 26px; background: linear-gradient(135deg, #e5f3fa, #f3fbfc 72%); }
+        .water-section-copy .landing-kicker { margin-bottom: 12px; color: var(--water-blue); }
+        .water-section-copy h2 { max-width: 520px; margin: 0 0 14px; color: #173c55; font-size: clamp(25px, 3.2vw, 38px); letter-spacing: -.045em; line-height: 1.12; }
         .water-section-copy > p:not(.landing-kicker) { max-width: 520px; margin: 0; color: #4d5e52; font-size: 14px; line-height: 1.75; }
-        .water-section-copy .water-section-note { margin-top: 14px !important; padding-left: 12px; border-left: 3px solid #77a66e; color: #385344 !important; font-size: 12px !important; }
+        .water-section-copy .water-section-note { margin-top: 14px !important; padding-left: 12px; border-left: 3px solid #3199ae; color: #26586c !important; font-size: 12px !important; }
         .water-photo-grid { display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: 12px; }
-        .water-photo { position: relative; min-width: 0; min-height: 245px; margin: 0; overflow: hidden; border-radius: 18px; background: #dce8d9; box-shadow: 0 12px 26px rgba(34, 55, 42, .12); }
+        .water-photo { position: relative; min-width: 0; min-height: 245px; margin: 0; overflow: hidden; border-radius: 18px; background: #d5eaf2; box-shadow: 0 12px 26px rgba(34, 55, 42, .12); }
         .water-photo-pivot { min-height: 205px; margin-top: 34px; }
         .water-photo img { display: block; width: 100%; height: 100%; min-height: inherit; object-fit: cover; transition: transform .45s; }
         .water-photo:hover img { transform: scale(1.035); }
         .water-photo::after { position: absolute; inset: 45% 0 0; background: linear-gradient(transparent, rgba(14, 33, 22, .72)); content: ""; pointer-events: none; }
         .water-photo figcaption { position: absolute; z-index: 1; right: 14px; bottom: 14px; left: 14px; color: white; font-size: 12px; font-weight: 700; line-height: 1.35; text-shadow: 0 1px 5px rgba(0, 0, 0, .35); }
-        .photo-credit { grid-column: 2; margin: -20px 0 0; color: #68786d; font-size: 10px; text-align: right; }
+        .photo-credit { grid-column: 2; margin: -20px 0 0; color: #3f7285; font-size: 10px; text-align: right; }
         .photo-credit a { color: inherit; }
         .landing-benefits { margin: 0 0 28px; }
         .proposals-panel { padding: clamp(22px, 3.5vw, 36px); background: rgba(255, 255, 255, .8); }
@@ -302,8 +304,8 @@
         .landing-benefits .landing-kicker { margin-bottom: 10px; }
         .benefit-list { gap: 14px; }
         .benefit-item { min-height: 0; padding: 19px; }
-        .benefit-water { border-color: rgba(39, 118, 77, .25); background: #eff7ee; }
-        .benefit-water .benefit-icon { background: #d9ebd8; }
+        .benefit-water { border-color: rgba(22, 124, 125, .25); background: #edf7f6; }
+        .benefit-water .benefit-icon { background: #d9efed; color: var(--teal); }
         .origin-card { max-width: none; margin-bottom: 24px; padding: 20px 22px; background: rgba(255, 255, 255, .72); }
         .auth-panel { position: sticky; top: 88px; margin-top: 0; }
         .origin-card { display: flex; align-items: flex-start; gap: 14px; max-width: none; margin-bottom: 24px; padding: 20px 22px; border: 1px solid rgba(39, 118, 77, .12); border-radius: 15px; background: rgba(255, 255, 255, .72); }
@@ -383,8 +385,8 @@
         @media (max-width: 460px) {
             .landing-header { gap: 6px; }
             .landing-nav { gap: 0; }
-            .landing-nav a { padding: 7px 6px; font-size: 9px; }
-            .landing-nav .landing-nav-login { margin-left: 2px; padding: 8px; }
+            .landing-nav a { padding: 7px 4px; font-size: 8px; }
+            .landing-nav .landing-nav-login { margin-left: 0; padding: 8px 4px; }
             .landing-brand-tagline { font-size: 9px; }
             .landing-title { font-size: 38px; }
             .landing-brand-tagline { display: none; }
@@ -397,6 +399,11 @@
             .benefit-item { display: grid; grid-template-columns: 25px 1fr; min-height: 0; align-items: center; gap: 4px 9px; }
             .benefit-item .benefit-icon { grid-row: span 2; }
             .benefit-item strong { margin-top: 0; }
+        }
+        @media (max-width: 360px) {
+            .landing-header { flex-wrap: wrap; padding: 8px 0; }
+            .landing-nav { width: 100%; justify-content: space-between; }
+            .landing-nav a { padding: 7px 10px; font-size: 10px; }
         }
         @media (prefers-reduced-motion: reduce) {
             .login-overlay { scroll-behavior: auto; }
