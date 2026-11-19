@@ -58,6 +58,17 @@
         return auth.token ? { ...extra, Authorization: `Bearer ${auth.token}` } : extra;
     }
 
+    function resetPasswordRecovery() {
+        document.getElementById("recovery-cpf-form").reset();
+        document.getElementById("recovery-code-form").reset();
+        document.getElementById("recovery-cpf-step").hidden = false;
+        document.getElementById("recovery-channel-step").hidden = true;
+        document.getElementById("recovery-code-step").hidden = true;
+        document.getElementById("recovery-cpf-error").textContent = "";
+        document.getElementById("recovery-sent-message").textContent = "";
+        document.getElementById("recovery-error").textContent = "";
+    }
+
     function showLogin(message = "") {
         auth.clear();
         document.getElementById("dashboard-shell").hidden = true;
@@ -72,8 +83,10 @@
         document.getElementById("profile-edit-section").hidden = true;
         document.getElementById("producer-list").replaceChildren();
         document.getElementById("login-form").hidden = false;
+        document.getElementById("password-recovery-form").hidden = true;
         document.getElementById("registration-form").hidden = true;
         document.getElementById("force-form").hidden = true;
+        resetPasswordRecovery();
         document.getElementById("login-error").textContent = message;
         document.getElementById("login-overlay").classList.add("visible");
         document.getElementById("login-user").focus();
@@ -1453,6 +1466,10 @@
         applyInputMask(event.currentTarget, formatCpf);
     });
 
+    document.getElementById("recovery-cpf").addEventListener("input", event => {
+        applyInputMask(event.currentTarget, formatCpf);
+    });
+
     document.getElementById("registration-phone").addEventListener("input", event => {
         applyInputMask(event.currentTarget, formatPhone);
     });
@@ -1507,8 +1524,9 @@
     const landingOverlay = document.getElementById("login-overlay");
     const landingNavLinks = [...document.querySelectorAll("[data-landing-nav]")];
     function setActiveLandingLink(targetId) {
+        const navTargetId = targetId === "landing-how-it-works" ? "landing-benefits" : targetId;
         landingNavLinks.forEach(link => {
-            const active = link.hash === `#${targetId}`;
+            const active = link.hash === `#${navTargetId}`;
             link.classList.toggle("active", active);
             if (active) link.setAttribute("aria-current", "location");
             else link.removeAttribute("aria-current");
@@ -1524,7 +1542,7 @@
                 .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
             if (visible.length) setActiveLandingLink(visible[0].target.id);
         }, { root: landingOverlay, rootMargin: "-15% 0px -65% 0px", threshold: [0, 0.2, 0.4] });
-        for (const id of ["landing-about", "landing-story", "landing-benefits"]) {
+        for (const id of ["landing-about", "landing-story", "landing-how-it-works", "landing-benefits"]) {
             landingObserver.observe(document.getElementById(id));
         }
     }
@@ -1634,13 +1652,67 @@
 
     document.getElementById("show-registration").addEventListener("click", () => {
         document.getElementById("login-form").hidden = true;
+        document.getElementById("password-recovery-form").hidden = true;
         document.getElementById("registration-form").hidden = false;
         document.getElementById("registration-error").textContent = "";
         document.getElementById("registration-user").focus();
     });
 
+    document.getElementById("forgot-password").addEventListener("click", () => {
+        const recoveryForm = document.getElementById("password-recovery-form");
+        resetPasswordRecovery();
+        document.getElementById("login-form").hidden = true;
+        document.getElementById("registration-form").hidden = true;
+        recoveryForm.hidden = false;
+        document.getElementById("recovery-cpf").focus();
+    });
+
+    document.getElementById("recovery-cpf-form").addEventListener("submit", event => {
+        event.preventDefault();
+        document.getElementById("recovery-cpf-step").hidden = true;
+        document.getElementById("recovery-channel-step").hidden = false;
+        document.getElementById("recovery-email").focus();
+    });
+
+    document.querySelectorAll('input[name="recovery-channel"]').forEach(channel => {
+        channel.addEventListener("change", () => {
+            const errorBox = document.getElementById("recovery-error");
+            const contact = channel.parentElement.querySelector(".recovery-contact").textContent;
+            const destination = channel.value === "email" ? "o e-mail" : "o celular";
+            document.getElementById("recovery-sent-message").textContent =
+                `Código enviado para ${destination} ${contact}. (Demonstração: nenhum envio real foi feito.)`;
+            document.getElementById("recovery-code-step").hidden = false;
+            errorBox.textContent = "";
+            document.getElementById("recovery-code").focus();
+        });
+    });
+
+    document.getElementById("recovery-code-form").addEventListener("submit", event => {
+        event.preventDefault();
+        document.getElementById("recovery-error").textContent =
+            "Código inválido. Verifique o código e tente novamente.";
+    });
+
+    document.getElementById("recovery-back-to-cpf").addEventListener("click", () => {
+        document.getElementById("recovery-code-form").reset();
+        document.getElementById("recovery-channel-step").hidden = true;
+        document.getElementById("recovery-code-step").hidden = true;
+        document.getElementById("recovery-sent-message").textContent = "";
+        document.getElementById("recovery-error").textContent = "";
+        document.getElementById("recovery-cpf-step").hidden = false;
+        document.getElementById("recovery-cpf").focus();
+    });
+
+    document.getElementById("recovery-back-to-login").addEventListener("click", () => {
+        document.getElementById("password-recovery-form").hidden = true;
+        resetPasswordRecovery();
+        document.getElementById("login-form").hidden = false;
+        document.getElementById("login-user").focus();
+    });
+
     document.getElementById("back-to-login").addEventListener("click", () => {
         document.getElementById("registration-form").hidden = true;
+        document.getElementById("password-recovery-form").hidden = true;
         document.getElementById("login-form").hidden = false;
         document.getElementById("login-user").focus();
     });

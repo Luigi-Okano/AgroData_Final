@@ -319,6 +319,17 @@
         .proposals-content { position: relative; z-index: 1; }
         .landing-benefits h2 { margin-bottom: 9px; color: #344a3b; font-size: 20px; letter-spacing: -.02em; }
         .proposals-intro { max-width: 620px; margin: 0 0 16px; color: #4d5e52; font-size: 14px; line-height: 1.65; }
+        .workflow-steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 20px 0; }
+        .workflow-step { display: flex; align-items: flex-start; gap: 12px; padding: 16px; border: 1px solid rgba(39, 70, 49, .1); border-radius: 13px; background: rgba(255, 255, 255, .76); }
+        .workflow-step-number { display: grid; width: 30px; height: 30px; flex: 0 0 30px; place-items: center; border-radius: 10px; background: #e2f1ef; color: #167c7d; font-size: 11px; font-weight: 750; }
+        .workflow-step strong { display: block; margin: 2px 0 6px; color: #31483a; font-size: 14px; }
+        .workflow-step p, .irrigation-explainer p { margin: 0; color: #526257; font-size: 13px; line-height: 1.65; }
+        .irrigation-explainer { margin: 18px 0 22px; padding: 17px 19px; border: 1px solid rgba(22, 124, 125, .2); border-left: 4px solid var(--teal); border-radius: 13px; background: #edf7f6; }
+        .irrigation-explainer h3 { margin: 0 0 8px; color: #284b4b; font-size: 15px; }
+        .irrigation-explainer p + p { margin-top: 8px; }
+        .proposals-summary { padding-top: 20px; border-top: 1px solid rgba(39, 70, 49, .12); }
+        .proposals-summary h3 { margin: 0 0 9px; color: #344a3b; font-size: clamp(20px, 2.4vw, 25px); letter-spacing: -.02em; }
+        .proposals-summary .landing-kicker { margin-bottom: 8px; }
         .benefit-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
         .benefit-item { min-height: 102px; padding: 16px; border: 1px solid rgba(39, 70, 49, .09); border-radius: 13px; background: rgba(255, 255, 255, .72); }
         .benefit-item strong { display: block; margin: 8px 0 6px; color: #31483a; font-size: 14px; }
@@ -343,6 +354,14 @@
         .login-card .login-link { min-height: 30px; margin-top: 8px; padding: 4px; background: transparent; color: var(--green-dark); font-size: 12px; font-weight: 650; }
         .login-card .login-link:hover { background: #f3f8f3; text-decoration: underline; }
         .login-error { min-height: 18px; margin-top: 10px; color: #b3261e; font-size: 12px; line-height: 1.45; }
+        .recovery-options { margin: 14px 0; padding: 10px 12px; border: 1px solid #dfe6df; border-radius: 10px; }
+        .recovery-options legend { padding: 0 5px; color: #495b4e; font-size: 12px; font-weight: 650; }
+        .login-card .recovery-option { display: flex; align-items: center; gap: 9px; margin: 8px 0 0; cursor: pointer; }
+        .login-card .recovery-option input { width: auto; min-height: 0; margin: 0; accent-color: var(--green); }
+        .recovery-contact { display: block; margin-top: 3px; color: #526257; font-size: 12px; font-weight: 500; }
+        .login-card .recovery-demo-note { margin: -10px 0 12px; color: #69786d; font-size: 11px; }
+        .login-card .recovery-notice { margin: 12px 0 !important; padding: 10px 12px; border-radius: 9px; background: #eef6ef; color: #345941; font-size: 12px; }
+        #recovery-cpf-step[hidden], #recovery-channel-step[hidden], #recovery-code-step[hidden] { display: none; }
         .landing-footnote { padding-top: 14px; border-top: 1px solid rgba(39, 70, 49, .1); color: #5b6b60; font-size: 10px; text-align: center; }
         @media (max-width: 900px) {
             .landing-main { grid-template-columns: minmax(0, 1fr) minmax(300px, .8fr); gap: 28px; }
@@ -375,6 +394,9 @@
             .landing-benefits { margin-top: 18px; }
             .proposals-panel { padding: 18px; }
             .proposal-watermark { top: 48px; right: 6px; width: 150px; height: 150px; }
+            .workflow-steps { grid-template-columns: 1fr; }
+            .workflow-step { padding: 14px; }
+            .irrigation-explainer { padding: 15px; }
             .benefit-list { grid-template-columns: 1fr; }
             .benefit-item { display: grid; grid-template-columns: 25px 1fr; min-height: 0; align-items: start; gap: 4px 12px; }
             .benefit-item .benefit-icon { grid-row: span 2; }
